@@ -12,27 +12,34 @@ public class Persona {
 	//atributos de la clase
 	private String nombre, apellido;
 	private String cedula;
+	private int cant_meses_trabajados;
+	private double salario_total, aguinaldo;
 	//maximo doce meses de salario
 	private String fechaIngreso, fechaSalida;
 	private int diasVacaciones;
-	private double salarioMensual[]= new double[12];
+	
 	
 	//contructor
 	public Persona() {
+		
+
+		
+		
+	}
+	
+
+	public void calcularAguinaldo() {
+	aguinaldo = (salario_total * cant_meses_trabajados) / cant_meses_trabajados;
 		
 		
 		
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public double calcularAguinaldo() {
+	public void mostrar () { 
 		
-		 double aguinaldo = 0;
+	
+	
 		
-		return aguinaldo; 
 	}
 	
 	/**
@@ -130,14 +137,5 @@ public class Persona {
 		this.diasVacaciones = diasVacaciones;
 	}
 
-	public double[] getSalarioMensual() {
-		return salarioMensual;
-	}
 
-	public void setSalarioMensual(double[] salarioMensual) {
-		this.salarioMensual = salarioMensual;
-	}
-	
-
-	
 }

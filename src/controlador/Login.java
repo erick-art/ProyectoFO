@@ -23,7 +23,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Cursor;
 
-//
+//Clase Login
 public class Login extends JFrame{
 
 	

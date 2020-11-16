@@ -5,6 +5,7 @@ package Principal;
  * @author Cris T
  * @author Jurgen A
  * @author Cesar M
+ * @author Erick V
  *
  */
 public class Persona {

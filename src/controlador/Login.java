@@ -1,29 +1,40 @@
 package controlador;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
-
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-
+import styles.JPassBorde;
+import styles.TextFieldBorde;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Cursor;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
-//Clase Login
+//
 public class Login extends JFrame{
 
 	
@@ -31,17 +42,23 @@ public class Login extends JFrame{
 	
 	//Dimensiones
 	private final int X=600,Y=450;
-	private final int IY=0;
+	private final int IY=450;
 	
-	//
+	//Componentes GUI
 	private JPanel mainPanel;
 	private Color logBack=new Color(44,44,44);
 	private Color barraLog=new Color(36,36,36);
+	private JTextField username;
+	private JPasswordField userpass;
+	private JTextField regCedula;
+	private JTextField regNombre;
+	private JTextField regApellido;
+	private JTextField regContro;
+	private JTextField verContra;
 	
 	
-	//
+	//Constructor Login
 	public Login() {
-		
 	
 		//Main Panel
 		mainPanel=new JPanel();
@@ -59,6 +76,7 @@ public class Login extends JFrame{
 		this.setBackground(logBack);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setOpacity(1.0f);
 		
 
 		//GUI Components
@@ -85,11 +103,7 @@ public class Login extends JFrame{
 		lblV.setBounds(550, 2, 20, 25);
 		barraPer.add(lblV);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.BLACK);
-		panel.setBounds(0, 31, 600, 1);
-		barraPer.add(panel);
-		
+		//SLIDER
 		slider = new JPanel();
 		slider.setLayout(null);
 		slider.setBounds(0, 43, 1200, 396);
@@ -99,41 +113,43 @@ public class Login extends JFrame{
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(242,43,1));
 		separator.setForeground(separator.getBackground());
-		separator.setBounds(20, 91, 575, 11);
+		separator.setBounds(21, 108, 575, 11);
 		slider.add(separator);
 		
 		JLabel lblNewLabel = new JLabel("Iniciar Sesion");
-		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(218, 56, 174, 34);
+		lblNewLabel.setBounds(219, 78, 174, 29);
 		slider.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("ENTRAR");
 		btnNewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setBackground(new Color(242,43,1));
 		btnNewButton.setFocusPainted(false);
-		btnNewButton.setBounds(170, 289, 253, 45);
-		 
+		btnNewButton.setBackground(new Color(242,43,1));
+		btnNewButton.setBorder(new LineBorder(Color.BLACK,2));
+		btnNewButton.setBounds(171, 317, 236, 34); 
 		slider.add(btnNewButton);
+		
 		
 		JLabel regLabel = new JLabel("Registrarse");
 		regLabel.setToolTipText("\u00BFDesea registrarse?");
 		regLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		regLabel.setForeground(Color.WHITE);
-		regLabel.setBounds(253, 366, 78, 19);
+		regLabel.setBounds(252, 377, 78, 19);
+		regLabel.requestFocus();
 		slider.add(regLabel);
 		
 		JLabel lblO = new JLabel("o");
 		lblO.setForeground(Color.WHITE);
 		lblO.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblO.setBounds(280, 345, 20, 19);
+		lblO.setBounds(279, 356, 20, 19);
 		slider.add(lblO);
 		
 		JLabel lblregistrarUsuario = new JLabel(">Registrar Usuario");
 		lblregistrarUsuario.setForeground(Color.WHITE);
-		lblregistrarUsuario.setFont(new Font("Times New Roman", Font.PLAIN, 21));
+		lblregistrarUsuario.setFont(new Font("Arial", Font.PLAIN, 21));
 		lblregistrarUsuario.setBounds(611, 11, 214, 34);
 		slider.add(lblregistrarUsuario);
 		
@@ -142,12 +158,109 @@ public class Login extends JFrame{
 		lblRegresar.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblRegresar.setBounds(1112, 356, 78, 29);
 		slider.add(lblRegresar);
-				
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBounds(252, 7, 66, 71);
+		imageResizer(lblNewLabel_2,"/recursos/userLogin.png",66,60);
+		slider.add(lblNewLabel_2);
+		
+		//Nombre de usuario
+		username = new TextFieldBorde("Cedula");
+		username.setBounds(171, 158, 236, 29);
+		slider.add(username);
+		username.setColumns(10);
+		
+		//Contrasena
+		userpass = new JPassBorde("Password");
+		userpass.setBounds(171, 220, 236, 29);
+		slider.add(userpass);
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setBounds(117, 220, 29, 29);
+		imageResizer(lblNewLabel_3,"/recursos/passS.png",29,29);
+		slider.add(lblNewLabel_3);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(117, 158, 42, 29);
+		imageResizer(label,"/recursos/crede.png",42,29);
+		slider.add(label);
+		
+		regCedula = new TextFieldBorde("Minimo 9 digitos");
+		regCedula.setBounds(776, 78, 198, 32);
+		slider.add(regCedula);
+		regCedula.setColumns(10);
+		
+		regNombre = new TextFieldBorde("Ingrese su nombre");
+		regNombre.setColumns(10);
+		regNombre.setBounds(776, 126, 198, 32);
+		slider.add(regNombre);
+		
+		regApellido = new TextFieldBorde("Ingrese su apellido");
+		regApellido.setColumns(10);
+		regApellido.setBounds(776, 173, 198, 32);
+		slider.add(regApellido);
+		
+		regContro = new TextFieldBorde("Ingrese una contraseña");
+		regContro.setColumns(10);
+		regContro.setBounds(776, 217, 198, 32);
+		slider.add(regContro);
+		
+		verContra =new TextFieldBorde("Repita la contraseña");
+		verContra.setColumns(10);
+		verContra.setBounds(776, 260, 198, 32);
+		slider.add(verContra);
+		
+		JLabel regIcon = new JLabel("");
+		imageResizer(regIcon,"/recursos/regC.png",112,133);
+		regIcon.setBounds(1009, 135, 112, 133);
+		slider.add(regIcon);
+		
+		JLabel labelh = new JLabel("Cedula");
+		labelh.setForeground(new Color(204, 204, 204));
+		labelh.setFont(new Font("Arial", Font.PLAIN, 18));
+		labelh.setBounds(621, 83, 108, 25);
+		slider.add(labelh);
+		
+		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setForeground(new Color(204, 204, 204));
+		lblNombre.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblNombre.setBounds(621, 130, 108, 25);
+		slider.add(lblNombre);
+		
+		JLabel lblApellido = new JLabel("Apellido");
+		lblApellido.setForeground(new Color(204, 204, 204));
+		lblApellido.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblApellido.setBounds(621, 177, 108, 25);
+		slider.add(lblApellido);
+		
+		JLabel lblContrasea = new JLabel("Contraseña");
+		lblContrasea.setForeground(new Color(204, 204, 204));
+		lblContrasea.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblContrasea.setBounds(621, 222, 108, 25);
+		slider.add(lblContrasea);
+		
+		JLabel lblRContrasea = new JLabel("R. Contraseña");
+		lblRContrasea.setForeground(new Color(204, 204, 204));
+		lblRContrasea.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblRContrasea.setBounds(621, 269, 131, 25);
+		slider.add(lblRContrasea);
+		
+		JButton btnRegistrarse = new JButton("Registrarse");
+		btnRegistrarse.setForeground(Color.WHITE);
+		btnRegistrarse.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnRegistrarse.setFocusPainted(false);
+		btnRegistrarse.setBorder(new LineBorder(Color.BLACK,2));
+		btnRegistrarse.setBackground(new Color(32,116,172));
+		btnRegistrarse.setBounds(747, 326, 236, 34);
+		slider.add(btnRegistrarse);
 		
 		
-		//Event
 		
-			//
+								//EVENTOS
+		
+		
+		
+		//Eventos de 'X'
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
@@ -173,6 +286,8 @@ public class Login extends JFrame{
 			}
 		});
 		
+		
+		//Eventos de 'V'
 		lblV.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
@@ -200,10 +315,12 @@ public class Login extends JFrame{
 			
 		});
 		
+		
+		//Eventos de 'ENTRAR'
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				btnNewButton.setBackground(new Color(220,37,0));
+				btnNewButton.setBackground(new Color(215,30,0));
 			}
 			
 			@Override
@@ -211,27 +328,28 @@ public class Login extends JFrame{
 				btnNewButton.setBackground(new Color(242,43,1));
 			}
 			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				btnNewButton.setBackground(new Color(195,32,0));
-			}
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if(btnNewButton.getBackground()!=new Color(242,43,1)) {
-					
-					btnNewButton.setBackground(new Color(220,37,0));
-				}
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
 			
 		});
 		
 		
+		//Eventos de 'Registrar'
+		btnRegistrarse.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				btnRegistrarse.setBackground(new Color(32,116,172));
+			}
+					
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				btnRegistrarse.setBackground(new Color(21,99,151));
+			}
+					
+		});
+		
+		
+		
+		//Eventos de 'Registrarse'
 		regLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
@@ -262,6 +380,8 @@ public class Login extends JFrame{
 			
 		});
 		
+		
+		//Eventos de 'Regresar'
 		lblRegresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
@@ -292,9 +412,10 @@ public class Login extends JFrame{
 			
 		});
 		
+								//EVENTOS DEL JFRAME
 		
 		
-		
+		//Rounded Corner
 		this.addComponentListener(new ComponentAdapter() {
             @Override
              public void componentResized(ComponentEvent e) {    	 
@@ -305,12 +426,16 @@ public class Login extends JFrame{
 		
 		
 		
-		//set the visible
+		
+		//Set the visible
 		this.setVisible(true);
 		amplier();
 	}
 	
 	
+	
+	
+	//
 	public void amplier() {
 		
 		
@@ -323,6 +448,10 @@ public class Login extends JFrame{
 			
 			
 				if(getHeight()==Y) {
+					((Timer) ar.getSource()).stop();
+				}else if(getHeight()>Y) {
+					setSize(X,Y);
+					setLocationRelativeTo(null);
 					((Timer) ar.getSource()).stop();
 				}
 				
@@ -351,6 +480,10 @@ public class Login extends JFrame{
 					
 					if((slider.getX()+slider.getWidth())==600) {
 						((Timer) ar.getSource()).stop();
+						
+					}else if(slider.getX()<-600) {
+						slider.setLocation(-600, slider.getY());
+						((Timer) ar.getSource()).stop();
 					}
 				}
 				
@@ -369,6 +502,9 @@ public class Login extends JFrame{
 					
 					if((slider.getX()+slider.getWidth())==1200) {
 						((Timer) ar.getSource()).stop();
+					}else if(slider.getX()>0) {
+						slider.setLocation(0,slider.getY());
+						((Timer) ar.getSource()).stop();
 					}
 				}
 				
@@ -380,5 +516,24 @@ public class Login extends JFrame{
 		
 	}
 	
+
 	
+	
+	//Cargador de imagenes
+	public void imageResizer(JLabel componente,String dir,int x,int y) {
+		try {
+				
+			URL imagenBuffer= Login.class.getResource(dir);
+				
+			BufferedImage ima=ImageIO.read(imagenBuffer.openStream());
+				
+			Image imagenRedimensionada = ima.getScaledInstance(x,y, Image.SCALE_SMOOTH);
+			ImageIcon icono=new ImageIcon(imagenRedimensionada);
+				
+			componente.setIcon(icono);
+				
+		}catch(Exception e) {
+			componente.setText("");
+		}
+	}
 }

@@ -8,16 +8,23 @@ import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
+
+
+import modelo.Usuario;
 import styles.JPassBorde;
 import styles.TextFieldBorde;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import javax.imageio.ImageIO;
@@ -56,10 +63,16 @@ public class Login extends JFrame{
 	private JTextField regContro;
 	private JTextField verContra;
 	
+	public ArrayList <Usuario> Mis_Panitas = new ArrayList <Usuario>();
 	
 	//Constructor Login
 	public Login() {
-	
+		Usuario mipana = new Usuario();
+		mipana.setAPELLIDO("davila");
+		mipana.setCedula("123456789");
+		mipana.setNOMBRE("pablo");
+		mipana.setPASSWORD("050100");
+		Mis_Panitas.add(mipana);
 		//Main Panel
 		mainPanel=new JPanel();
 		mainPanel.setBorder(null);
@@ -200,12 +213,12 @@ public class Login extends JFrame{
 		regApellido.setBounds(776, 173, 198, 32);
 		slider.add(regApellido);
 		
-		regContro = new TextFieldBorde("Ingrese una contraseÃ±a");
+		regContro = new TextFieldBorde("Ingrese una contraseña");
 		regContro.setColumns(10);
 		regContro.setBounds(776, 217, 198, 32);
 		slider.add(regContro);
 		
-		verContra =new TextFieldBorde("Repita la contraseÃ±a");
+		verContra =new TextFieldBorde("Repita la contraseña");
 		verContra.setColumns(10);
 		verContra.setBounds(776, 260, 198, 32);
 		slider.add(verContra);
@@ -233,13 +246,13 @@ public class Login extends JFrame{
 		lblApellido.setBounds(621, 177, 108, 25);
 		slider.add(lblApellido);
 		
-		JLabel lblContrasea = new JLabel("ContraseÃ±a");
+		JLabel lblContrasea = new JLabel("Contraseña");
 		lblContrasea.setForeground(new Color(204, 204, 204));
 		lblContrasea.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblContrasea.setBounds(621, 222, 108, 25);
 		slider.add(lblContrasea);
 		
-		JLabel lblRContrasea = new JLabel("R. ContraseÃ±a");
+		JLabel lblRContrasea = new JLabel("R. Contraseña");
 		lblRContrasea.setForeground(new Color(204, 204, 204));
 		lblRContrasea.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblRContrasea.setBounds(621, 269, 131, 25);
@@ -321,6 +334,7 @@ public class Login extends JFrame{
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				btnNewButton.setBackground(new Color(215,30,0));
+				
 			}
 			
 			@Override
@@ -330,7 +344,31 @@ public class Login extends JFrame{
 			
 			
 		});
-		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Boolean Encotrado=false;
+				if(username.getText()=="Cedula"&&String.valueOf(userpass.getPassword())=="Password") {
+					String Contarseña =(String.valueOf(userpass.getPassword()));
+				
+				
+					for (int i = 0; i < Mis_Panitas.size(); i++) {
+					
+						if (Mis_Panitas.get(i).getPASSWORD().equals(Contarseña) && Mis_Panitas.get(i).getCedula().equals(username.getText())) {
+						Encotrado=true;
+						System.out.println("si entro papi");	
+						
+						}
+					
+					}
+						if(Encotrado==false){
+							JOptionPane.showMessageDialog(null,"El usuario o la contraseña se incorrecta");
+					
+						}
+				}else {
+					JOptionPane.showMessageDialog(null,"Ingrese contraseña o cedula");
+				}
+				}
+		});
 		
 		//Eventos de 'Registrar'
 		btnRegistrarse.addMouseListener(new MouseAdapter() {
@@ -338,6 +376,7 @@ public class Login extends JFrame{
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				btnRegistrarse.setBackground(new Color(32,116,172));
+				
 			}
 					
 			@Override
@@ -346,7 +385,47 @@ public class Login extends JFrame{
 			}
 					
 		});
-		
+		btnRegistrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Usuario Nuevo_Pana = new Usuario();
+				Boolean Encotrado=false;
+				
+			if(regCedula.getText()=="Minimo 9 digitos"&&regNombre.getText()=="Ingrese su nombre"&&regApellido.getText()=="Ingrese su apellido"&&regContro.getText()!="Ingrese una contraseña"&&regContro.getText()!="Repita la contraseña") {
+				String Contarseña =(String.valueOf(regContro.getText()));
+				for (int i = 0; i < Mis_Panitas.size(); i++) {
+					
+					System.out.println(Contarseña+" y pass"+Mis_Panitas.get(i).getPASSWORD()+" and user "+Mis_Panitas.get(i).getCedula()); 
+					if (Mis_Panitas.get(i).getCedula().equals(regCedula.getText())) {
+						Encotrado=true;
+								
+					}
+					
+				}
+				if(Encotrado==false) {
+					if(Contarseña.equals(String.valueOf(verContra.getText()))) {
+						Nuevo_Pana.setCedula(regCedula.getText());
+					
+						Nuevo_Pana.setPASSWORD(Contarseña);
+						Nuevo_Pana.setNOMBRE(regNombre.getText());
+						Nuevo_Pana.setAPELLIDO(regApellido.getText());
+						Mis_Panitas.add(Nuevo_Pana);
+						
+						
+						
+					}else {
+						JOptionPane.showMessageDialog(null,"Las contraseñas no coinciden");
+						verContra.setText("");
+						regContro.setText("");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"El nombre de usuario "+regCedula.getText() +" no esta disponible");
+					regCedula.setText("");
+				}
+				}else {
+					JOptionPane.showMessageDialog(null,"Falta ingreseingresar informacion");
+				}
+			}
+		});
 		
 		
 		//Eventos de 'Registrarse'

@@ -6,20 +6,27 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
-
+import java.awt.image.BufferedImage;
+import java.net.URL;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
+import styles.CustomButton;
 import javax.swing.JSeparator;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 //Clase Main, interfaz principal
 public class Main extends JFrame{
@@ -29,20 +36,19 @@ public class Main extends JFrame{
 	private final int X=1100,Y=650;
 	private JPanel mainPanel;
 	
-	//Pestans
+	//Pestanas
 	private Color Focus=new Color(37,37,37);
-	private Color UnFocus=new Color(45,45,45);
-	private Color Hover=new Color(43,43,43);
 	
 	//Buttons
-	private JPanel calcButton;
-	private JPanel insButton;
-	private JPanel mostButton;
-	private JPanel modifyButton;
-	private JPanel calculos;
-	private JPanel modificar;
-	private JPanel ingresar;
-	private JPanel mostrar;
+	private CustomButton calcButton;
+	private CustomButton insButton;
+	private CustomButton mostButton;
+	private CustomButton modifyButton;
+	//Paneles
+	private Calculo calculos;
+	private Modificar modificar;
+	private Ingresar ingresar;
+	private Mostrar mostrar;
 	
 	//Constructor Main
 	public Main() {
@@ -50,7 +56,7 @@ public class Main extends JFrame{
 		mainPanel=new JPanel();
 		mainPanel.setSize(new Dimension(0, 15));
 		mainPanel.setLayout(null);
-		mainPanel.setBackground(new Color(50,50,50));
+		mainPanel.setBackground(new Color(52,52,52));
 		
 		///Chara
 		this.setSize(X,Y);
@@ -77,139 +83,81 @@ public class Main extends JFrame{
 		
 						//Botones Pestanas
 		
-		calcButton = new JPanel();
+		calcButton = new CustomButton(1,"Calculos","/recursos/calcforpanel.png");
 		calcButton.setBounds(26, 68, 160, 37);
-		calcButton.setBorder(BorderFactory.createMatteBorder(1,1,0,1,Color.black));
-		calcButton.setBackground(Focus);
 		mainPanel.add(calcButton);
 		
-		insButton = new JPanel();
+		insButton = new CustomButton(2,"Ingresar","/recursos/insicon.png");
 		insButton.setBounds(184, 68, 160, 37);
-		insButton.setBorder(BorderFactory.createMatteBorder(1,1,0,1,Color.black));
-		insButton.setBackground(UnFocus);
 		mainPanel.add(insButton);
 		
-		mostButton = new JPanel();
+		mostButton = new CustomButton(3,"Mostrar","/recursos/histoicon.png");
 		mostButton.setBounds(343, 68, 160, 37);
-		mostButton.setBorder(BorderFactory.createMatteBorder(1,1,0,1,Color.black));
-		mostButton.setBackground(UnFocus);
 		mainPanel.add(mostButton);
 		
-		modifyButton = new JPanel();
+		modifyButton = new CustomButton(4,"Modificar","/recursos/modifyico.png");
 		modifyButton.setBounds(503, 68, 160, 37);
-		modifyButton.setBorder(BorderFactory.createMatteBorder(1,0,0,1,Color.black));
-		modifyButton.setBackground(UnFocus);
 		mainPanel.add(modifyButton);
 		
 		
 									//PANELES
 		
-		calculos = new JPanel();
+		calculos = new Calculo();
 		calculos.setBounds(26, 105, 1047, 516);
 		calculos.setBorder(new LineBorder(Color.BLACK,1));
 		calculos.setBackground(Focus);
 		mainPanel.add(calculos);
 		
-		ingresar = new JPanel();
-		ingresar.setBounds(26, 105, 1047, 516);
-		ingresar.setBorder(new LineBorder(Color.BLACK,1));
-		ingresar.setBackground(Focus);
+		ingresar = new Ingresar();
+		ingresar.setVisible(false);
 		mainPanel.add(ingresar);
 		
-		mostrar = new JPanel();
+		mostrar = new Mostrar();
 		mostrar.setBounds(26, 105, 1047, 516);
 		mostrar.setBorder(new LineBorder(Color.BLACK,1));
 		mostrar.setBackground(Focus);
+		mostrar.setVisible(false);
 		mainPanel.add(mostrar);
 		
-		modificar = new JPanel();
+		modificar = new Modificar();
 		modificar.setBounds(26, 105, 1047, 516);
+		modificar.setBorder(new LineBorder(Color.BLACK,1));
 		modificar.setBackground(Focus);
+		modificar.setVisible(false);
 		mainPanel.add(modificar);
 		
 		
 		
 		
-							//EVENTOS
-		
-		insButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				if(insButton.getBackground()!=Focus) {
-					insButton.setBackground(Hover);
-				}
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				if(insButton.getBackground()!=Focus) {
-					insButton.setBackground(UnFocus);
-				}
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				switcher(insButton);
-			}
-		});
-		
-		
-		mostButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				if(mostButton.getBackground()!=Focus) {
-					mostButton.setBackground(Hover);
-				}
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				if(mostButton.getBackground()!=Focus) {
-					mostButton.setBackground(UnFocus);
-				}
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				switcher(mostButton);
-			}
-		});
-		
-		
-		modifyButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				if(modifyButton.getBackground()!=Focus) {
-					modifyButton.setBackground(Hover);
-				}
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				if(modifyButton.getBackground()!=Focus) {
-					modifyButton.setBackground(UnFocus);
-				}
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				switcher(modifyButton);
-			}
-		});
+							//EVENTOS BOTONES JPANEL
 		
 		calcButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				if(calcButton.getBackground()!=Focus) {
-					calcButton.setBackground(Hover);
-				}
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				if(calcButton.getBackground()!=Focus) {
-					calcButton.setBackground(UnFocus);
-				}
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent arg0) {
 				switcher(calcButton);
 			}
 		});
 		
+		insButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				switcher(insButton);
+			}
+		});
+		
+		mostButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				switcher(mostButton);
+			}
+		});
+		
+		modifyButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				switcher(modifyButton);
+			}
+		});
 		
 		
 		
@@ -235,21 +183,51 @@ public class Main extends JFrame{
 	
 	
 	
-	//
-	public void switcher(JPanel panel) {
+	//Switch Options
+	public void switcher(CustomButton panel) {
 		
-		insButton.setBackground(UnFocus);
-		mostButton.setBackground(UnFocus);
-		calcButton.setBackground(UnFocus);
-		modifyButton.setBackground(UnFocus);
+			insButton.setFocus(false);
+			mostButton.setFocus(false);
+			modifyButton.setFocus(false);
+			calcButton.setFocus(false);	
+			PanelChanger(panel.getRelatedPanel());
 		
-		panel.setBackground(Focus);
+	}
+	
+	//Panel Changer
+	public void PanelChanger(int number) {
+		modificar.setVisible(false);
+		ingresar.setVisible(false);
+		calculos.setVisible(false);
+		mostrar.setVisible(false);
+		
+		
+		switch(number) {
+			case 1:{
+				calcButton.setFocus(true);	
+				calculos.setVisible(true);
+			}break;
+			
+			case 2:{
+
+				insButton.setFocus(true);
+				ingresar.setVisible(true);
+			}break;
+			
+			case 3:{
+				mostButton.setFocus(true);
+				mostrar.setVisible(true);
+			}break;
+			
+			case 4:{
+				modifyButton.setFocus(true);
+				modificar.setVisible(true);
+			}break;
+		}
 	}
 	
 	
-	
-	
-	//
+	//Opacus Efect
 	public void Opacus() {
 		
 		try {
@@ -284,6 +262,21 @@ public class Main extends JFrame{
 	
 	
 	
-
-	
+	//Cargador de imagenes
+	public static void imageResizer(JLabel componente,String dir) {
+		try {
+					
+			URL imagenBuffer= Login.class.getResource(dir);
+					
+			BufferedImage ima=ImageIO.read(imagenBuffer.openStream());
+					
+			Image imagenRedimensionada = ima.getScaledInstance(componente.getWidth(),componente.getHeight(), Image.SCALE_SMOOTH);
+			ImageIcon icono=new ImageIcon(imagenRedimensionada);
+					
+			componente.setIcon(icono);
+					
+		}catch(Exception e) {
+			componente.setText("");
+		}
+	}
 }

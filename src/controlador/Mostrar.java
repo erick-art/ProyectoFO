@@ -3,6 +3,8 @@ package controlador;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import styles.CustomButton;
@@ -14,6 +16,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 //Ingresar los empleados para los posteriores calculos
@@ -55,9 +59,10 @@ public class Mostrar extends JPanel{
 		SinResModel.addColumn("Vacaciones");
 		SinResModel.addColumn("Motivo");
 		SinResModel.addColumn("ultimo que lo modificacion");
-	
-		
-		
+	String datos[]= {"jose","4","1","2","5","8","8","8","9"};
+		SinResModel.addRow(datos);
+		String datos2[]= {"2","2","1","2","5","8","8","8","9"};
+		SinResModel.addRow(datos2);
 		
 		DefaultTableModel ConResModel= new DefaultTableModel();
 		
@@ -125,6 +130,7 @@ public class Mostrar extends JPanel{
 				SinRespanel.add(SinResscrollPane);
 				
 				SinRestable = new JTable(SinResModel);
+				
 				SinResscrollPane.setViewportView(SinRestable);;
 				
 				SinRestable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -138,6 +144,36 @@ public class Mostrar extends JPanel{
 				SinRestable.getColumnModel().getColumn(6).setMinWidth(120);
 				SinRestable.getColumnModel().getColumn(7).setMinWidth(120);
 				SinRestable.getColumnModel().getColumn(8).setMinWidth(150);
+				
+				SinRestable.addMouseListener(new MouseAdapter() {
+					  public void mouseClicked(MouseEvent e) {
+						  
+						  System.out.println("sin modificar"+SinRestable.getValueAt(SinRestable.getSelectedRow(),0 ).toString());
+					    if (e.getClickCount() == 1) {
+					      
+					      System.out.println("modificando"+SinRestable.getValueAt(SinRestable.getSelectedRow(),SinRestable.getSelectedColumn() ).toString());
+					      
+					     
+					      // do some action if appropriate column
+					    }
+					    System.out.println("modificado"+SinRestable.getValueAt(SinRestable.getSelectedRow(),0 ).toString());
+					  }
+					});
+				ConRestable.addMouseListener(new MouseAdapter() {
+					  public void mouseClicked(MouseEvent e) {
+						  
+						  System.out.println("sin modificar"+ConRestable.getValueAt(ConRestable.getSelectedRow(),0 ).toString());
+					    if (e.getClickCount() == 1) {
+					      
+					      System.out.println("modificando"+ConRestable.getValueAt(ConRestable.getSelectedRow(),ConRestable.getSelectedColumn() ).toString());
+					      
+					     
+					      // do some action if appropriate column
+					    }
+					    System.out.println("modificado"+ConRestable.getValueAt(ConRestable.getSelectedRow(),0 ).toString());
+					  }
+					});
+				
 
 				//EVENTOS BOTONES JPANEL
 				ConResButton.addMouseListener(new MouseAdapter() {

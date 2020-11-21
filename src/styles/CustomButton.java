@@ -23,7 +23,7 @@ public class CustomButton extends JPanel{
 	private final int relatedPanel;
 	
 	//Constructor
-	public CustomButton(final int relatedPanel,String label,String DIR){
+	public CustomButton(final int relatedPanel,String label,String DIR,int width){
 		
 		this.relatedPanel=relatedPanel;
 		this.setLayout(null);
@@ -32,11 +32,11 @@ public class CustomButton extends JPanel{
 		if(relatedPanel==1) {
 			setBorder(BorderFactory.createMatteBorder(1,1,0,1,Color.black));
 			setBackground(Focus);
-		}else if(relatedPanel!=4){
+		}else if(relatedPanel!=3){
 			setBorder(BorderFactory.createMatteBorder(1,1,0,1,Color.black));
 			setBackground(UnFocus);
 		}else {
-			setBorder(BorderFactory.createMatteBorder(1,0,0,1,Color.black));
+			setBorder(BorderFactory.createMatteBorder(1,1,0,1,Color.black));
 			setBackground(UnFocus);
 		}
 		
@@ -47,7 +47,7 @@ public class CustomButton extends JPanel{
 		JLabel legend = new JLabel(label);
 		legend.setFont(new Font("Arial", Font.PLAIN, 16));
 		legend.setForeground(Color.WHITE);
-		legend.setBounds(60, 3, 70, 32);
+		legend.setBounds(60, 3, width, 32);
 		
 		//Icono
 		JLabel lblNewLabel = new JLabel("");

@@ -22,6 +22,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -40,19 +41,20 @@ public class Main extends JFrame{
 	private Color Focus=new Color(37,37,37);
 	
 	//Buttons
-	private CustomButton calcButton;
 	private CustomButton insButton;
 	private CustomButton mostButton;
 	private CustomButton modifyButton;
 	//Paneles
-	private Calculo calculos;
 	private Modificar modificar;
 	private Ingresar ingresar;
 	private Mostrar mostrar;
+	private JLabel iconBanner;
+	private JLabel title;
 	
 	//Constructor Main
 	public Main() {
 		
+		//Main
 		mainPanel=new JPanel();
 		mainPanel.setSize(new Dimension(0, 15));
 		mainPanel.setLayout(null);
@@ -68,6 +70,15 @@ public class Main extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(mainPanel);
 		
+		//Añadiendo el icono
+		//Control de excepciones
+		try {
+			Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/recursos/showIco.png"));
+			this.setIconImage(iconoPropio);
+		}catch(Exception e) {
+				//Exepcion vacia
+		}
+		
 		//Barra Personalizada
 		JPanel barra = new MotionPanel(this);
 		barra.setLayout(null);
@@ -81,35 +92,36 @@ public class Main extends JFrame{
 		ins.setBackground(new Color(232,33,0));
 		barra.add(ins);
 		
+		iconBanner = new JLabel("");
+		iconBanner.setBounds(3, 3, 46, 50);
+		imageResizer(iconBanner,"/recursos/logo.png");
+		barra.add(iconBanner);
+		
+		title = new JLabel("Calculadora de Liquidaci\u00F3n Laboral");
+		title.setForeground(Color.BLACK);
+		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		title.setBounds(66, 3, 563, 43);
+		barra.add(title);
+		
 						//Botones Pestanas
 		
-		calcButton = new CustomButton(1,"Calculos","/recursos/calcforpanel.png");
-		calcButton.setBounds(26, 68, 160, 37);
-		mainPanel.add(calcButton);
-		
-		insButton = new CustomButton(2,"Ingresar","/recursos/insicon.png");
-		insButton.setBounds(184, 68, 160, 37);
+		insButton = new CustomButton(1,"Ingresar","/recursos/insicon.png",70);
+		insButton.setBounds(26, 68, 160, 37);
+		insButton.setFocus(true);
 		mainPanel.add(insButton);
 		
-		mostButton = new CustomButton(3,"Mostrar","/recursos/histoicon.png");
-		mostButton.setBounds(343, 68, 160, 37);
+		mostButton = new CustomButton(2,"Mostrar","/recursos/histoicon.png",70);
+		mostButton.setBounds(184, 68, 160, 37);
 		mainPanel.add(mostButton);
 		
-		modifyButton = new CustomButton(4,"Modificar","/recursos/modifyico.png");
-		modifyButton.setBounds(503, 68, 160, 37);
+		modifyButton = new CustomButton(3,"Modificar","/recursos/modifyico.png",70);
+		modifyButton.setBounds(343, 68, 160, 37);
 		mainPanel.add(modifyButton);
 		
 		
 									//PANELES
 		
-		calculos = new Calculo();
-		calculos.setBounds(26, 105, 1047, 516);
-		calculos.setBorder(new LineBorder(Color.BLACK,1));
-		calculos.setBackground(Focus);
-		mainPanel.add(calculos);
-		
 		ingresar = new Ingresar();
-		ingresar.setVisible(false);
 		mainPanel.add(ingresar);
 		
 		mostrar = new Mostrar();
@@ -131,12 +143,6 @@ public class Main extends JFrame{
 		
 							//EVENTOS BOTONES JPANEL
 		
-		calcButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				switcher(calcButton);
-			}
-		});
 		
 		insButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -189,7 +195,6 @@ public class Main extends JFrame{
 			insButton.setFocus(false);
 			mostButton.setFocus(false);
 			modifyButton.setFocus(false);
-			calcButton.setFocus(false);	
 			PanelChanger(panel.getRelatedPanel());
 		
 	}
@@ -198,28 +203,23 @@ public class Main extends JFrame{
 	public void PanelChanger(int number) {
 		modificar.setVisible(false);
 		ingresar.setVisible(false);
-		calculos.setVisible(false);
 		mostrar.setVisible(false);
 		
 		
 		switch(number) {
-			case 1:{
-				calcButton.setFocus(true);	
-				calculos.setVisible(true);
-			}break;
 			
-			case 2:{
+			case 1:{
 
 				insButton.setFocus(true);
 				ingresar.setVisible(true);
 			}break;
 			
-			case 3:{
+			case 2:{
 				mostButton.setFocus(true);
 				mostrar.setVisible(true);
 			}break;
 			
-			case 4:{
+			case 3:{
 				modifyButton.setFocus(true);
 				modificar.setVisible(true);
 			}break;

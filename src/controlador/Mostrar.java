@@ -76,12 +76,12 @@ public class Mostrar extends JPanel{
 
 		//Botones Pestanas
 		
-				ConResButton = new CustomButton(1,"Con responsabilidad","/recursos/ConRes.png");
-				ConResButton.setBounds(26, 68, 160, 37);
+				ConResButton = new CustomButton(1,"Con responsabilidad","/recursos/ConRes.png",160);
+				ConResButton.setBounds(26, 68, 220, 37);
 				add(ConResButton);
 				
-				SinResButton = new CustomButton(2,"Sin responsabilidad","/recursos/SinRes.png");
-				SinResButton.setBounds(184, 68, 160, 37);
+				SinResButton = new CustomButton(2,"Sin responsabilidad","/recursos/SinRes.png",160);
+				SinResButton.setBounds(245, 68, 220, 37);
 				add(SinResButton);
 				
 				

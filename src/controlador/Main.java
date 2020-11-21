@@ -44,9 +44,8 @@ public class Main extends JFrame{
 	//Buttons
 	private CustomButton insButton;
 	private CustomButton mostButton;
-	private CustomButton modifyButton;
+	
 	//Paneles
-	private Modificar modificar;
 	private Ingresar ingresar;
 	private Mostrar mostrar;
 	private JLabel iconBanner;
@@ -128,10 +127,6 @@ public class Main extends JFrame{
 		mostButton.setBounds(184, 68, 160, 37);
 		mainPanel.add(mostButton);
 		
-		modifyButton = new CustomButton(3,"Modificar","/recursos/modifyico.png",70);
-		modifyButton.setBounds(343, 68, 160, 37);
-		mainPanel.add(modifyButton);
-		
 		
 									//PANELES
 		
@@ -144,14 +139,6 @@ public class Main extends JFrame{
 		mostrar.setBackground(Focus);
 		mostrar.setVisible(false);
 		mainPanel.add(mostrar);
-		
-		modificar = new Modificar();
-		modificar.setBounds(26, 105, 1047, 516);
-		modificar.setBorder(new LineBorder(Color.BLACK,1));
-		modificar.setBackground(Focus);
-		modificar.setVisible(false);
-		mainPanel.add(modificar);
-		
 		
 		
 		
@@ -169,13 +156,6 @@ public class Main extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				switcher(mostButton);
-			}
-		});
-		
-		modifyButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				switcher(modifyButton);
 			}
 		});
 		
@@ -223,14 +203,12 @@ public class Main extends JFrame{
 		
 			insButton.setFocus(false);
 			mostButton.setFocus(false);
-			modifyButton.setFocus(false);
 			PanelChanger(panel.getRelatedPanel());
 		
 	}
 	
 	//Panel Changer
 	public void PanelChanger(int number) {
-		modificar.setVisible(false);
 		ingresar.setVisible(false);
 		mostrar.setVisible(false);
 		
@@ -247,11 +225,7 @@ public class Main extends JFrame{
 				mostButton.setFocus(true);
 				mostrar.setVisible(true);
 			}break;
-			
-			case 3:{
-				modifyButton.setFocus(true);
-				modificar.setVisible(true);
-			}break;
+	
 		}
 	}
 	

@@ -61,6 +61,11 @@ public class TextFieldBorde extends JTextField {
 	}
 	
 	
+	//Is Default Value
+	public boolean isHolder() {
+		return (this.getText().equalsIgnoreCase(holder))?true:false;
+	}
+	
 	protected void paintComponent(Graphics g) {
 	   g.setColor(getBackground());
 	   g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);

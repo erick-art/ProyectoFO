@@ -22,7 +22,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
@@ -40,19 +42,24 @@ public class Main extends JFrame{
 	private Color Focus=new Color(37,37,37);
 	
 	//Buttons
-	private CustomButton calcButton;
 	private CustomButton insButton;
 	private CustomButton mostButton;
-	private CustomButton modifyButton;
+	
 	//Paneles
-	private Calculo calculos;
-	private Modificar modificar;
 	private Ingresar ingresar;
 	private Mostrar mostrar;
+	private JLabel iconBanner;
+	private JLabel title;
+	private JLabel lblNewLabel;
+	
+	//Iconos
+	private ImageIcon FoIco=null;
+	private ImageIcon UnFoIco=null;
 	
 	//Constructor Main
 	public Main() {
 		
+		//Main
 		mainPanel=new JPanel();
 		mainPanel.setSize(new Dimension(0, 15));
 		mainPanel.setLayout(null);
@@ -68,6 +75,15 @@ public class Main extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(mainPanel);
 		
+		//Añadiendo el icono
+		//Control de excepciones
+		try {
+			Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/recursos/showIco.png"));
+			this.setIconImage(iconoPropio);
+		}catch(Exception e) {
+				//Exepcion vacia
+		}
+		
 		//Barra Personalizada
 		JPanel barra = new MotionPanel(this);
 		barra.setLayout(null);
@@ -81,35 +97,40 @@ public class Main extends JFrame{
 		ins.setBackground(new Color(232,33,0));
 		barra.add(ins);
 		
+		iconBanner = new JLabel("");
+		iconBanner.setBounds(3, 3, 46, 50);
+		imageResizer(iconBanner,"/recursos/logo.png");
+		barra.add(iconBanner);
+		
+		title = new JLabel("Calculadora de Liquidaci\u00F3n Laboral");
+		title.setForeground(Color.BLACK);
+		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		title.setBounds(66, 3, 563, 43);
+		barra.add(title);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(1055, 11, 35, 35);
+		lblNewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		barra.add(lblNewLabel);
+		CargarIcono(0,"/recursos/exFo.png");
+		CargarIcono(1,"/recursos/exUnFo.png");
+		ExitSwitcher(1,lblNewLabel);
+		
 						//Botones Pestanas
 		
-		calcButton = new CustomButton(1,"Calculos","/recursos/calcforpanel.png");
-		calcButton.setBounds(26, 68, 160, 37);
-		mainPanel.add(calcButton);
-		
-		insButton = new CustomButton(2,"Ingresar","/recursos/insicon.png");
-		insButton.setBounds(184, 68, 160, 37);
+		insButton = new CustomButton(1,"Ingresar","/recursos/insicon.png",70);
+		insButton.setBounds(26, 68, 160, 37);
+		insButton.setFocus(true);
 		mainPanel.add(insButton);
 		
-		mostButton = new CustomButton(3,"Mostrar","/recursos/histoicon.png");
-		mostButton.setBounds(343, 68, 160, 37);
+		mostButton = new CustomButton(2,"Mostrar","/recursos/histoicon.png",70);
+		mostButton.setBounds(184, 68, 160, 37);
 		mainPanel.add(mostButton);
-		
-		modifyButton = new CustomButton(4,"Modificar","/recursos/modifyico.png");
-		modifyButton.setBounds(503, 68, 160, 37);
-		mainPanel.add(modifyButton);
 		
 		
 									//PANELES
 		
-		calculos = new Calculo();
-		calculos.setBounds(26, 105, 1047, 516);
-		calculos.setBorder(new LineBorder(Color.BLACK,1));
-		calculos.setBackground(Focus);
-		mainPanel.add(calculos);
-		
 		ingresar = new Ingresar();
-		ingresar.setVisible(false);
 		mainPanel.add(ingresar);
 		
 		mostrar = new Mostrar();
@@ -119,24 +140,10 @@ public class Main extends JFrame{
 		mostrar.setVisible(false);
 		mainPanel.add(mostrar);
 		
-		modificar = new Modificar();
-		modificar.setBounds(26, 105, 1047, 516);
-		modificar.setBorder(new LineBorder(Color.BLACK,1));
-		modificar.setBackground(Focus);
-		modificar.setVisible(false);
-		mainPanel.add(modificar);
-		
-		
 		
 		
 							//EVENTOS BOTONES JPANEL
 		
-		calcButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				switcher(calcButton);
-			}
-		});
 		
 		insButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -152,13 +159,21 @@ public class Main extends JFrame{
 			}
 		});
 		
-		modifyButton.addMouseListener(new MouseAdapter() {
+		//EVENTOS EXIT
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				ExitSwitcher(0,lblNewLabel);
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				ExitSwitcher(1,lblNewLabel);
+			}
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				switcher(modifyButton);
+				System.exit(0);
 			}
 		});
-		
 		
 		
 		
@@ -188,41 +203,29 @@ public class Main extends JFrame{
 		
 			insButton.setFocus(false);
 			mostButton.setFocus(false);
-			modifyButton.setFocus(false);
-			calcButton.setFocus(false);	
 			PanelChanger(panel.getRelatedPanel());
 		
 	}
 	
 	//Panel Changer
 	public void PanelChanger(int number) {
-		modificar.setVisible(false);
 		ingresar.setVisible(false);
-		calculos.setVisible(false);
 		mostrar.setVisible(false);
 		
 		
 		switch(number) {
-			case 1:{
-				calcButton.setFocus(true);	
-				calculos.setVisible(true);
-			}break;
 			
-			case 2:{
+			case 1:{
 
 				insButton.setFocus(true);
 				ingresar.setVisible(true);
 			}break;
 			
-			case 3:{
+			case 2:{
 				mostButton.setFocus(true);
 				mostrar.setVisible(true);
 			}break;
-			
-			case 4:{
-				modifyButton.setFocus(true);
-				modificar.setVisible(true);
-			}break;
+	
 		}
 	}
 	
@@ -262,11 +265,46 @@ public class Main extends JFrame{
 	
 	
 	
+	//Exit
+	public void ExitSwitcher(int num,JLabel la) {
+		if((num==0) && (FoIco!=null)) {
+			la.setIcon(FoIco);
+		}else if(UnFoIco!=null){
+			la.setIcon(UnFoIco);
+		}
+		la.repaint();
+	}
+	
+	
+	
+	//Cargador de imagenes
+	public void CargarIcono(int i,String dir) {
+		try {
+						
+			URL imagenBuffer= Main.class.getResource(dir);
+						
+			BufferedImage ima=ImageIO.read(imagenBuffer.openStream());
+						
+			Image imagenRedimensionada = ima.getScaledInstance(35,35, Image.SCALE_SMOOTH);
+			
+			if(i==0) {
+				FoIco=new ImageIcon(imagenRedimensionada);
+			}else {
+				UnFoIco=new ImageIcon(imagenRedimensionada);
+				
+			}
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	
+	
 	//Cargador de imagenes
 	public static void imageResizer(JLabel componente,String dir) {
 		try {
 					
-			URL imagenBuffer= Login.class.getResource(dir);
+			URL imagenBuffer= Main.class.getResource(dir);
 					
 			BufferedImage ima=ImageIO.read(imagenBuffer.openStream());
 					

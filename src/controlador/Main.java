@@ -24,6 +24,7 @@ import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
@@ -50,6 +51,11 @@ public class Main extends JFrame{
 	private Mostrar mostrar;
 	private JLabel iconBanner;
 	private JLabel title;
+	private JLabel lblNewLabel;
+	
+	//Iconos
+	private ImageIcon FoIco=null;
+	private ImageIcon UnFoIco=null;
 	
 	//Constructor Main
 	public Main() {
@@ -102,6 +108,14 @@ public class Main extends JFrame{
 		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		title.setBounds(66, 3, 563, 43);
 		barra.add(title);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(1055, 11, 35, 35);
+		lblNewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		barra.add(lblNewLabel);
+		CargarIcono(0,"/recursos/exFo.png");
+		CargarIcono(1,"/recursos/exUnFo.png");
+		ExitSwitcher(1,lblNewLabel);
 		
 						//Botones Pestanas
 		
@@ -165,6 +179,21 @@ public class Main extends JFrame{
 			}
 		});
 		
+		//EVENTOS EXIT
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				ExitSwitcher(0,lblNewLabel);
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				ExitSwitcher(1,lblNewLabel);
+			}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.exit(0);
+			}
+		});
 		
 		
 		
@@ -262,11 +291,46 @@ public class Main extends JFrame{
 	
 	
 	
+	//Exit
+	public void ExitSwitcher(int num,JLabel la) {
+		if((num==0) && (FoIco!=null)) {
+			la.setIcon(FoIco);
+		}else if(UnFoIco!=null){
+			la.setIcon(UnFoIco);
+		}
+		la.repaint();
+	}
+	
+	
+	
+	//Cargador de imagenes
+	public void CargarIcono(int i,String dir) {
+		try {
+						
+			URL imagenBuffer= Main.class.getResource(dir);
+						
+			BufferedImage ima=ImageIO.read(imagenBuffer.openStream());
+						
+			Image imagenRedimensionada = ima.getScaledInstance(35,35, Image.SCALE_SMOOTH);
+			
+			if(i==0) {
+				FoIco=new ImageIcon(imagenRedimensionada);
+			}else {
+				UnFoIco=new ImageIcon(imagenRedimensionada);
+				
+			}
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	
+	
 	//Cargador de imagenes
 	public static void imageResizer(JLabel componente,String dir) {
 		try {
 					
-			URL imagenBuffer= Login.class.getResource(dir);
+			URL imagenBuffer= Main.class.getResource(dir);
 					
 			BufferedImage ima=ImageIO.read(imagenBuffer.openStream());
 					

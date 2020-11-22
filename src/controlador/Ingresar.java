@@ -373,6 +373,7 @@ public class Ingresar extends JPanel{
 				
 				
 			}
+			Main.Mis_Empleado.add(temporal);
 			System.out.println(">ALL 0K");
 			
 		} catch (Exception e) {

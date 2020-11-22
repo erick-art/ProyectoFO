@@ -8,6 +8,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,6 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
+
+import modelo.Empleado;
+import modelo.Usuario;
 import styles.CustomButton;
 import javax.swing.JSeparator;
 import java.awt.Dimension;
@@ -55,7 +60,11 @@ public class Main extends JFrame{
 	//Iconos
 	private ImageIcon FoIco=null;
 	private ImageIcon UnFoIco=null;
-	
+	//variable static
+	static Usuario EnUso;
+	//ArrayList 
+	static ArrayList <Usuario> Mis_Usuario = new ArrayList <Usuario>();
+	static ArrayList <Empleado> Mis_Empleado = new ArrayList <Empleado>();
 	//Constructor Main
 	public Main() {
 		

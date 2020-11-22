@@ -63,7 +63,7 @@ public class Login extends JFrame{
 	private JTextField regContro;
 	private JTextField verContra;
 	
-	public ArrayList <Usuario> Mis_Panitas = new ArrayList <Usuario>();
+	
 	
 	//Constructor Login
 	public Login() {
@@ -351,12 +351,12 @@ public class Login extends JFrame{
 					String Contarseña =(String.valueOf(userpass.getPassword()));
 				
 				
-					for (int i = 0; i < Mis_Panitas.size(); i++) {
+					for (int i = 0; i <Main. Mis_Usuario.size(); i++) {
 					
-						if (Mis_Panitas.get(i).getPASSWORD().equals(Contarseña) && Mis_Panitas.get(i).getCedula().equals(username.getText())) {
+						if (Main.Mis_Usuario.get(i).getPASSWORD().equals(Contarseña) && Main.Mis_Usuario.get(i).getCedula().equals(username.getText())) {
 						Encotrado=true;
 						System.out.println("si entro papi");	
-						
+						Main.EnUso=Main.Mis_Usuario.get(i);
 						}
 					
 					}
@@ -392,10 +392,10 @@ public class Login extends JFrame{
 				
 			if(regCedula.getText()=="Minimo 9 digitos"&&regNombre.getText()=="Ingrese su nombre"&&regApellido.getText()=="Ingrese su apellido"&&regContro.getText()!="Ingrese una contraseña"&&regContro.getText()!="Repita la contraseña") {
 				String Contarseña =(String.valueOf(regContro.getText()));
-				for (int i = 0; i < Mis_Panitas.size(); i++) {
+				for (int i = 0; i < Main.Mis_Usuario.size(); i++) {
 					
-					System.out.println(Contarseña+" y pass"+Mis_Panitas.get(i).getPASSWORD()+" and user "+Mis_Panitas.get(i).getCedula()); 
-					if (Mis_Panitas.get(i).getCedula().equals(regCedula.getText())) {
+					System.out.println(Contarseña+" y pass"+Main.Mis_Usuario.get(i).getPASSWORD()+" and user "+Main.Mis_Usuario.get(i).getCedula()); 
+					if (Main.Mis_Usuario.get(i).getCedula().equals(regCedula.getText())) {
 						Encotrado=true;
 								
 					}
@@ -408,7 +408,7 @@ public class Login extends JFrame{
 						Nuevo_Pana.setPASSWORD(Contarseña);
 						Nuevo_Pana.setNOMBRE(regNombre.getText());
 						Nuevo_Pana.setAPELLIDO(regApellido.getText());
-						Mis_Panitas.add(Nuevo_Pana);
+						Main.Mis_Usuario.add(Nuevo_Pana);
 						
 						
 						

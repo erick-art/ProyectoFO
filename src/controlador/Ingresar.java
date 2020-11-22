@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
+
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.ButtonGroup;
@@ -20,6 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import com.toedter.calendar.JDateChooser;
+
+import modelo.ConResponsabilidad;
+import modelo.Empleado;
+import modelo.SinResponsabilidad;
 
 //Ingresar los empleados para los posteriores calculos
 public class Ingresar extends JPanel{
@@ -28,7 +36,7 @@ public class Ingresar extends JPanel{
 	private Color Focus=new Color(37,37,37);
 	
 	//FIELDS
-	private JTextField regCedula;
+	private RegisterField regCedula;
 	private RegisterField regNombre;
 	private RegisterField regApellido;
 	private RegisterField registerField;
@@ -41,6 +49,16 @@ public class Ingresar extends JPanel{
 	//SIN RESP
 	private JLabel motivol;
 	private JScrollPane motivoPanel;
+	private TablaMeses table;
+	private JLabel avisoLog;
+	private JRadioButton rdbtnNewRadioButton;
+	private JTextArea motivo;
+	private JDateChooser ingress;
+	private JDateChooser salida;
+	
+	
+	
+	//Tabla de meses
 	
 	
 	//Constructor
@@ -51,6 +69,7 @@ public class Ingresar extends JPanel{
 		setBorder(new LineBorder(Color.BLACK,1));
 		setLayout(null);
 		setBackground(Focus);
+		
 		
 		JLabel lblNewLabel = new JLabel("\u2022 Ingresar Empleado");
 		lblNewLabel.setForeground(Color.WHITE);
@@ -152,7 +171,7 @@ public class Ingresar extends JPanel{
 		ActionListener accion=Event->typeChanger(((JRadioButton)Event.getSource()).getText().toString());
 		
 		//Botones radio
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Con responsabilidad");
+		rdbtnNewRadioButton = new JRadioButton("Con responsabilidad");
 		rdbtnNewRadioButton.setForeground(Color.WHITE);
 		rdbtnNewRadioButton.setFont(new Font("Book Antiqua", Font.PLAIN, 15));
 		rdbtnNewRadioButton.setBounds(344, 285, 169, 23);
@@ -217,13 +236,38 @@ public class Ingresar extends JPanel{
 		motivoPanel.setVisible(false);
 		add(motivoPanel);
 		
-		JTextArea motivo = new JTextArea();
+		motivo = new JTextArea();
 		motivo.setFont(new Font("Monospaced", Font.PLAIN, 18));
 		motivo.setLineWrap(true);
 		motivo.setCaretColor(Color.WHITE);
 		motivo.setForeground(Color.WHITE);
 		motivo.setBackground(new Color(44,44,44));
 		motivoPanel.setViewportView(motivo);
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBorder(new LineBorder(Color.BLACK,2));
+		scrollPane.setBounds(690, 59, 347, 231);
+		scrollPane.getViewport().setBackground(new Color(43,43,43));
+		add(scrollPane);
+		
+		table = new TablaMeses();
+		scrollPane.setViewportView(table);
+		
+		ingress = new JDateChooser();
+		ingress.setBounds(428, 218, 188, 20);
+		add(ingress);
+		
+		salida = new JDateChooser();
+		salida.setBounds(428, 249, 188, 20);
+		add(salida);
+		
+		avisoLog = new JLabel("");
+		avisoLog.setForeground(Color.WHITE);
+		avisoLog.setVerticalAlignment(SwingConstants.TOP);
+		avisoLog.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		avisoLog.setBounds(268, 448, 611, 57);
+		add(avisoLog);
 		
 		
 		
@@ -248,13 +292,245 @@ public class Ingresar extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				if(dataVerifyer()==0) {
+					DataGetterAndSaver();
+					resetAll();
+					avisoLog.setText("<html><body>Calculo realizado exitosamente, por favor verifiquelo en la pestaña de 'Mostrar'</body></html>");
+				}
 			}
 			
 		});
 		
 	}
+	
+	
+	//
+	public void DataGetterAndSaver() {
+		try {
+			Empleado temporal=null;
+			//Tipo de despido
+			if(rdbtnNewRadioButton.isSelected()) {
+				temporal=new ConResponsabilidad();
+				temporal.setResponsabilidad(true);
+			}else {
+				temporal=new SinResponsabilidad();
+				temporal.setResponsabilidad(false);
+			}
+			
+			if(temporal!=null) {
+				
+				//Rellenar informacion basica del Empleado
+				temporal.setCedula(regCedula.getText());
+				temporal.setApellido(regApellido.getText());
+				temporal.setNombre(regNombre.getText());
+				temporal.setFechaIngreso(ingress.getDate());
+				temporal.setFechaSalida(salida.getDate());
+				temporal.setVacaciones(Integer.parseInt(registerField.getText()));
+				temporal.setSalarios(table.obtenerSalarios());
+				
+				
+				
+				//Empleado con despido con responsabilidad
+				if(temporal.isResponsabilidad()) {
+					
+					if(!((ConResponsabilidad) temporal).isPreaviso()) {
+						
+						((ConResponsabilidad) temporal).setCalculoPreaviso(0);
+						
+					}else {
+						
+						//>CALCULO DE PREAVISO
+						
+						
+						
+						//((ConResponsabilidad) temporal).setCalculoPreaviso(Resultado?);
+					}
+					
+					//>CALCULO DE CESANTIA
+					
+					
+					
+				
+					//((ConResponsabilidad) temporal).setCalculoCesantia(Resultado?);
+					
+				
+					
+					
+				}else {
+				//Empleado con despido sin responsabilidad	
+					
+					((SinResponsabilidad) temporal).setMotivo(motivo.getText());
+				
+				}
+				
+				
+				//CALCULO DELEMPLEADO EN GENERAL
+
+				
+				
+				//temporal.setCalculoAguinaldo(Resultado?);
+				//temporal.setCalculoVaciones(Resultado?);
+				
+				
+			}
+			System.out.println(">ALL 0K");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	
+	
+	//Verificar los datos
+	public int dataVerifyer() {
+		
+		int general=0;
+		avisoLog.setText("");
+		
+		//CEDULA
+		if((!regCedula.isHolder()) && (regCedula.getText().length()==9)) {
+			
+			try {
+				int var=Integer.parseInt(regCedula.getText());
+			} catch (Exception e) {
+				if(general==0) {
+					general=2;	
+				}
+			}
+			
+		}else if(general==0) {
+			general=1;
+		}
+		
+		//NOMBRE
+		if((regNombre.isHolder()) && (general==0)) {
+			general=3;
+		}else if((regNombre.getText().length()==0) && (general==0)) {
+			general=30;
+		}
+		
+		//APELLIDO
+		if((regApellido.isHolder()) && (general==0)) {
+			general=4;
+		}else if((regApellido.getText().length()==0) && (general==0)) {
+			general=40;
+		}
+		
+		//VACACIONES
+		if((!registerField.isHolder())) {
+			try {
+				int va=Integer.parseInt(registerField.getText());
+			
+				if(va<0) {
+					general=50;
+				}
+			} catch (Exception e) {
+				if(general==0) {
+					general=6;	
+				}
+			}
+		}else if(general==0) {
+			general=5;
+		}
+		
+		
+		//SIN RESPONSABILIDAD
+		if(!rdbtnNewRadioButton.isSelected()) {
+			if(motivo.getText().length()==0) {
+				general=7;
+			}
+		}
+		
+		//FECHAS
+		Date tempA=null;
+		Date tempB=null;
+		
+		if(((tempA=ingress.getDate())!=null) && ((tempB=salida.getDate())!=null)) {
+			if(ingress.getDateFormatString().equals(salida.getDateFormatString())){
+				if((tempA.compareTo(tempB))!=-1) {
+					general=10;
+				}
+			}else if(general==0) {
+				general=9;
+			}
+		}else if(general==0) {
+			general=8;
+		}
+		
+		
+		if((table.dataVerifyer()) && (general==0)) {
+			general=11;
+		}
+		
+		
+		switch(general) {
+		
+			case 1:{
+				avisoLog.setText("<html><body>Por favor ingrese la cedula del empleado (9 digitos).</body></html>");
+			}break;
+			
+			case 2:{
+				avisoLog.setText("<html><body>Ingrese solo valores numéricos enteros en el campo de cedula del empleado.</body></html>");
+			}break;
+			
+			case 3:{
+				avisoLog.setText("<html><body>Ingrese el nombre del empleado.</body></html>");
+			}break;
+			
+			case 30:{
+				avisoLog.setText("<html><body>Ingrese el nombre del empleado.</body></html>");
+			}break;
+			
+			case 4:{
+				avisoLog.setText("<html><body>Ingrese el apellido del empleado.</body></html>");
+			}break;
+			
+			case 40:{
+				avisoLog.setText("<html><body>Ingrese el apellido del empleado.</body></html>");
+			}break;
+			
+			
+			case 5:{
+				avisoLog.setText("<html><body>Ingrese las vacaciones acumuladas del empleado.</body></html>");
+			}break;
+			
+			case 50:{
+				avisoLog.setText("<html><body>El campo de vacaciones acumuladas no puede ser menor a 0.</body></html>");
+			}break;
+			
+			case 6:{
+				avisoLog.setText("<html><body>Ingrese valores numéricos enteros en el campo de vacaciones acumuladas.</body></html>");
+			}break;
+			
+			case 7:{
+				avisoLog.setText("<html><body>Debe ingresar el motivo de despido.</body></html>");
+			}break;
+			
+			case 8:{
+				avisoLog.setText("<html><body>Proporcione la fecha de ingreso y salida del empleado.</body></html>");
+			}break;
+			
+			case 9:{
+				avisoLog.setText("<html><body>Las fechas proporcionadas no tienen el mismo formato</body></html>");
+			}break;
+			
+			case 10:{
+				avisoLog.setText("<html><body>La fecha de salida es menor a la de ingreso.</body></html>");
+			}break;
+			
+			case 11:{
+				avisoLog.setText("<html><body>Por favor verifique los valores de la tabla de salarios.</body></html>");
+			}break;		
+		
+		}
+		
+		
+		return general;
+	}
+	
+	
+	
 	
 	
 	
@@ -277,4 +553,23 @@ public class Ingresar extends JPanel{
 			motivoPanel.setVisible(true);
 		}
 	}
+	
+	
+	
+	//Resetear todo
+	public void resetAll() {
+		avisoLog.setText("");
+		regCedula.setHolder(true);
+		regNombre.setHolder(true);
+		registerField.setHolder(true);
+		regApellido.setHolder(true);
+		motivo.setText("");
+		ingress.setDate(null);
+		salida.setDate(null);
+		table.resetAll();
+	}
+	
+	
+	
+	
 }

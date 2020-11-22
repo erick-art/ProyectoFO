@@ -69,6 +69,18 @@ public class RegisterField extends JTextField {
 	}
 
 	
+	//Set holder
+	public void setHolder(boolean type) {
+		if(type) {
+			setFont(DeFocus);
+			setForeground(Color.GRAY);
+			setText(holder);
+		}else {
+			setForeground(Color.WHITE);
+			setText("");
+		}
+	}
+	
 	
 	//Painted
 	protected void paintComponent(Graphics g) {

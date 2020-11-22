@@ -568,8 +568,4 @@ public class Ingresar extends JPanel{
 		salida.setDate(null);
 		table.resetAll();
 	}
-	
-	
-	
-	
 }

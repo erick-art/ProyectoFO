@@ -357,7 +357,7 @@ public class Ingresar extends JPanel{
 						double salario = 0.0;
 						int condicion = 0;
 						
-						for (int i = temporal.getSalarios().length; i>=0; i--) {
+						for (int i = (temporal.getSalarios().length-1); i>=0; i--) {
 							
 							if (condicion!= 6 ){
 								
@@ -473,11 +473,14 @@ public class Ingresar extends JPanel{
 				
 				
 			}
+			
 			Main.Mis_Empleado.add(temporal);
 			System.out.println(">ALL 0K");
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+
+
+		
 		}
 	}
 	

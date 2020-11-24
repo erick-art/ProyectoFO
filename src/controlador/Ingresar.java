@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JSeparator;
@@ -55,7 +56,6 @@ public class Ingresar extends JPanel{
 	private JTextArea motivo;
 	private JDateChooser ingress;
 	private JDateChooser salida;
-	
 	
 	
 	//Tabla de meses
@@ -324,20 +324,102 @@ public class Ingresar extends JPanel{
 				temporal.setApellido(regApellido.getText());
 				temporal.setNombre(regNombre.getText());
 				temporal.setFechaIngreso(ingress.getDate());
-				temporal.setFechaSalida(salida.getDate());
+				temporal.setFechaSalida(salida.getDate()); 
 				temporal.setVacaciones(Integer.parseInt(registerField.getText()));
 				temporal.setSalarios(table.obtenerSalarios());
-				
+
 				
 				
 				//Empleado con despido con responsabilidad
-				if(temporal.isResponsabilidad()) {
+					if(temporal.isResponsabilidad()) {
 					
-					if(!((ConResponsabilidad) temporal).isPreaviso()) {
+					if(rdbtnConPreaviso.isSelected()) { 
+					
+					((ConResponsabilidad) temporal).setPreaviso(true);
+					
+					}else {
 						
-						((ConResponsabilidad) temporal).setCalculoPreaviso(0);
+					((ConResponsabilidad) temporal).setPreaviso(false);	
+					
+					}
+					
+					if(((ConResponsabilidad) temporal).isPreaviso()) {
+						
+					((ConResponsabilidad) temporal).setCalculoPreaviso(0);
+						
 						
 					}else {
+						System.out.println();
+						temporal.setDias_trabajados(antiguedad_laboral(temporal.getFechaIngreso(), temporal.getFechaSalida()));
+						System.out.println(antiguedad_laboral(temporal.getFechaIngreso(), temporal.getFechaSalida()));
+
+						double preaviso_aux = 0;
+						double salario = 0.0;
+						int condicion = 0;
+						
+						for (int i = temporal.getSalarios().length; i>=0; i--) {
+							
+							if (condicion!= 6 ){
+								
+							salario+= temporal.getSalarios()[i];	
+								
+							condicion ++;
+							}
+							
+							
+
+							
+						}
+						
+						temporal.setSalario_seis_meses(salario);
+						System.out.println(temporal.getSalario_seis_meses());
+											
+						if(temporal.getDias_trabajados() >= 91 || temporal.getDias_trabajados() <= 182.5) {
+						
+						temporal.setMonto_mensual(temporal.getSalario_seis_meses() / 6);
+						
+						System.out.println(temporal.getMonto_mensual());
+						 
+						preaviso_aux = temporal.getMonto_mensual() / 30;
+						
+						System.out.println(preaviso_aux);
+						
+						((ConResponsabilidad) temporal).setCalculoPreaviso(preaviso_aux * 7);
+						
+						}
+						
+						if(temporal.getDias_trabajados() > 182.5 || temporal.getDias_trabajados() <= 365) {
+							
+							temporal.setMonto_mensual(temporal.getSalario_seis_meses()/ 6);
+							System.out.println(temporal.getMonto_mensual());
+
+							 
+							preaviso_aux = temporal.getMonto_mensual() / 30;
+							System.out.println(preaviso_aux);
+
+							((ConResponsabilidad) temporal).setCalculoPreaviso(preaviso_aux * 15);
+							
+							}
+						
+						
+						System.out.println(temporal.getDias_trabajados());
+						
+						if (temporal.getDias_trabajados() > 365) { 
+							
+							temporal.setMonto_mensual(temporal.getSalario_seis_meses() / 6);
+							System.out.println(temporal.getMonto_mensual());
+
+							 
+							preaviso_aux = temporal.getMonto_mensual() / 30;
+							System.out.println(preaviso_aux);
+
+							
+							((ConResponsabilidad) temporal).setCalculoPreaviso(preaviso_aux * 30);
+							
+							
+						}
+						
+						
 						
 						//>CALCULO DE PREAVISO
 						
@@ -353,8 +435,17 @@ public class Ingresar extends JPanel{
 				
 					//((ConResponsabilidad) temporal).setCalculoCesantia(Resultado?);
 					
+					
+					//CALCULO DE VACACIONES
+					
+					for (int i = 0; i < temporal.getSalarios().length ; i++) {
+						
+					temporal.setSalario_total(temporal.getSalarios()[i]);
+						
+					}
 				
 					
+				temporal.setCalculoVaciones((temporal.getSalario_total() / 30 * temporal.getVacaciones()));
 					
 				}else {
 				//Empleado con despido sin responsabilidad	
@@ -365,11 +456,20 @@ public class Ingresar extends JPanel{
 				
 				
 				//CALCULO DELEMPLEADO EN GENERAL
-
+				double salario_aux = 0.0;
+				for (int i = 0; i < temporal.getSalarios().length ; i++) {
+					
+					salario_aux += temporal.getSalarios()[i];
+					
+						
+					}
 				
+				temporal.setSalario_total(salario_aux);
 				
-				//temporal.setCalculoAguinaldo(Resultado?);
-				//temporal.setCalculoVaciones(Resultado?);
+				temporal.setCalculoAguinaldo(temporal.getSalario_total() / 12 );
+				
+				temporal.setCalculoVaciones((temporal.getSalario_total() / 30 * temporal.getVacaciones()));
+				
 				
 				
 			}
@@ -559,6 +659,7 @@ public class Ingresar extends JPanel{
 	
 	//Resetear todo
 	public void resetAll() {
+
 		avisoLog.setText("");
 		regCedula.setHolder(true);
 		regNombre.setHolder(true);
@@ -568,5 +669,19 @@ public class Ingresar extends JPanel{
 		ingress.setDate(null);
 		salida.setDate(null);
 		table.resetAll();
-	}
+	
+}
+
+
+public long antiguedad_laboral (Date inicio , Date fin) { 
+
+long dias = 0; 
+
+dias= (fin.getTime()-inicio.getTime()) /86400000;
+
+return dias;	
+	
+} 
+
+
 }

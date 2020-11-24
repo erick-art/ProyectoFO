@@ -72,7 +72,7 @@ public class Login extends JFrame{
 		mipana.setCedula("123456789");
 		mipana.setNOMBRE("pablo");
 		mipana.setPASSWORD("050100");
-		Mis_Panitas.add(mipana);
+		//Mis_Panitas.add(mipana);
 		//Main Panel
 		mainPanel=new JPanel();
 		mainPanel.setBorder(null);

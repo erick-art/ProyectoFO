@@ -13,7 +13,7 @@ public class Persona {
 	//atributos de la clase
 	private String nombre, apellido;
 	private String cedula;
-	private int cant_meses_trabajados, años_trabajados;
+	private int cant_meses_trabajados, años_trabajados, dias_preaviso;
 	private double salario_total, aguinaldo, salario_seis_meses, monto_mensual, salario_semanal, salario_mensual;
 	private double pre_aviso, pago_vacaciones, cesantia, liquidacion;
 	//maximo doce meses de salario
@@ -31,7 +31,7 @@ public class Persona {
 	
 
 	public void calcularAguinaldo() {
-	aguinaldo = (salario_total * cant_meses_trabajados) / cant_meses_trabajados;
+	aguinaldo = salario_total  / 12;
 		
 
 		
@@ -44,25 +44,18 @@ public class Persona {
 		
 	}
 	
-	public void calcularPreaviso(Boolean bandera_quincenal) {
+	public void calcularPreaviso() {
 	
-		double preaviso_aux = 0;
+	double preaviso_aux = 0;
 		
-	if(bandera_quincenal == true) { //Si es true lo divide entre 26
 	
-	 monto_mensual = (salario_seis_meses*6 ) / 6 ;   
+	 monto_mensual = salario_seis_meses / 6 ;   
 	 
-	 preaviso_aux = monto_mensual / 26;
+	 preaviso_aux = monto_mensual / 30;
 	
-	 pre_aviso = preaviso_aux * 15;
+	 pre_aviso = preaviso_aux * dias_preaviso;
 		
-	} else { //Sino lo hace por 30
-		
-		 monto_mensual = (salario_seis_meses * 6 ) / 6 ;   
-		 
-		 preaviso_aux = monto_mensual / 30 ;
-		
-		 pre_aviso = preaviso_aux * 15;
+	
 						
 	}
 		
@@ -71,36 +64,22 @@ public class Persona {
 		
 		
 		
-	}
 	
-	public void calculo_vacaciones (Boolean bandera_semanal ) { 
 	
-		if (bandera_semanal == true) { 
-			
-	pago_vacaciones = (salario_semanal / 6 ) * 12; //Metodo no terminado
-			
-			
-		}else { 
-			
-			pago_vacaciones = (salario_mensual / 30 ) * 14; //Metodo no terminado
+	public void calculo_vacaciones () { 
 
+	pago_vacaciones = (salario_mensual / 30 ) *  diasVacaciones;		
 			
-		}
-		
-		
-		
-		
-		
 	}
 	
 	
 	
 	
-	public void calcularCensatia(int forma_pago, int dias) {
+	public void calcularCensatia(int dias) {
 		
 	double cesantia_aux = 0;	
-	salario_mensual = (monto_mensual * 6) / 6; 	 
-	cesantia_aux = salario_mensual / forma_pago;
+	salario_mensual = monto_mensual / 6; 	 
+	cesantia_aux = salario_mensual / 30;
 	cesantia = cesantia_aux * dias;
 	cesantia = cesantia * años_trabajados;  
 		 

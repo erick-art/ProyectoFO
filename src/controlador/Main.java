@@ -19,6 +19,7 @@ import javax.swing.Timer;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
+import Principal.Ignitor;
 import modelo.Empleado;
 import modelo.Usuario;
 import styles.CustomButton;
@@ -60,11 +61,15 @@ public class Main extends JFrame{
 	//Iconos
 	private ImageIcon FoIco=null;
 	private ImageIcon UnFoIco=null;
+	
+	/*
 	//variable static
 	static Usuario EnUso;
 	//ArrayList 
 	static ArrayList <Usuario> Mis_Usuario = new ArrayList <Usuario>();
 	static ArrayList <Empleado> Mis_Empleado = new ArrayList <Empleado>();
+	*/
+	
 	//Constructor Main
 	public Main() {
 		
@@ -180,7 +185,7 @@ public class Main extends JFrame{
 			}
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				System.exit(0);
+				Depacus();
 			}
 		});
 		
@@ -272,6 +277,53 @@ public class Main extends JFrame{
 		
 	}
 	
+	
+	
+	//Depacus Efect
+	public void Depacus() {
+			
+		try {
+		
+			
+			float numbers[]= {1.0f,0.9f,0.8f,0.7f,0.6f,0.5f,0.4f,0.3f,0.2f,0.1f};
+			
+			javax.swing.Timer t=new javax.swing.Timer(10,new ActionListener() {
+					
+				int count=0;
+					
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					setOpacity(numbers[count]);
+					count+=1;
+					if(count==9) {
+						((Timer) e.getSource()).stop();
+						ExitMain();
+					}
+						
+				}
+					
+			});
+				
+			t.start();
+				
+				
+		} catch (Exception e) {
+			ExitMain();
+			setOpacity(0.1f);
+		}
+			
+	}
+	
+	
+	
+	//Cerrar main
+	public void ExitMain() {
+		setVisible(false);
+		Ignitor.current=null;
+		new Login();
+		dispose();
+	}
 	
 	
 	//Exit

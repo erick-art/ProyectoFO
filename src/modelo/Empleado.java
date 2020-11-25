@@ -10,6 +10,7 @@ public abstract class Empleado {
 	private String apellido;
 	private Date FechaIngreso;
 	private Date FechaSalida;
+	private String realizador;
 	private double salarios[]=new double[12];
 	private int vacaciones;
 	private boolean responsabilidad;
@@ -156,6 +157,18 @@ public abstract class Empleado {
 
 	public double getSalario_mensual() {
 		return salario_mensual;
+	}
+
+
+
+	public String getRealizador() {
+		return realizador;
+	}
+
+
+
+	public void setRealizador(String realizador) {
+		this.realizador = realizador;
 	}
 
 

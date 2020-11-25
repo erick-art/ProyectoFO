@@ -37,18 +37,21 @@ public class TextFieldBorde extends JTextField {
 	
 		//FOCUS
 		addFocusListener(new FocusAdapter() {
+			//Focus Gain
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				setFont(Focus);
 				
-				if(getText().equals(holder)) {
+				if(getText().equalsIgnoreCase(holder)) {
 					setForeground(Color.WHITE);
 					setText("");
 				}
 			}
+			
+			//Focus lost
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				if(getText().isEmpty()) {
+				if((getText().isEmpty()) || (getText().equalsIgnoreCase(holder))) {
 					setFont(DeFocus);
 					setForeground(Color.GRAY);
 					setText(holder);
@@ -61,20 +64,41 @@ public class TextFieldBorde extends JTextField {
 	}
 	
 	
+	//Set holder
+	public void setHolder(boolean type) {
+		if(type) {
+			setFont(DeFocus);
+			setForeground(Color.GRAY);
+			setText(holder);
+		}else {
+			setFont(Focus);
+			setForeground(Color.WHITE);
+			setText("");
+		}
+	}
+	
+
 	//Is Default Value
 	public boolean isHolder() {
 		return (this.getText().equalsIgnoreCase(holder))?true:false;
 	}
+
 	
+	
+	//Painted
 	protected void paintComponent(Graphics g) {
 	   g.setColor(getBackground());
 	   g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
 	   super.paintComponent(g);
 	}
+	
+	//Painted Border
 	protected void paintBorder(Graphics g) {
 	   g.setColor(Color.GRAY);
 	   g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);
 	}
+	
+	//Rounded corner
 	public boolean contains(int x, int y) {
 	   if (shape == null || !shape.getBounds().equals(getBounds())) {
 	      shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 15, 15);

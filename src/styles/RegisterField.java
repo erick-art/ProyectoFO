@@ -63,11 +63,6 @@ public class RegisterField extends JTextField {
 		
 	}
 
-	//Is Default Value
-	public boolean isHolder() {
-		return (this.getText().equalsIgnoreCase(holder))?true:false;
-	}
-
 	
 	//Set holder
 	public void setHolder(boolean type) {
@@ -80,6 +75,13 @@ public class RegisterField extends JTextField {
 			setText("");
 		}
 	}
+	
+	
+	//Is Default Value
+	public boolean isHolder() {
+		return (this.getText().equalsIgnoreCase(holder))?true:false;
+	}
+
 	
 	
 	//Painted

@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 
 import javax.swing.table.DefaultTableModel;
 
+import Principal.Ignitor;
 import modelo.ConResponsabilidad;
 import modelo.SinResponsabilidad;
 import styles.CustomButton;
@@ -242,7 +243,8 @@ public class Mostrar extends JPanel{
 							if (Rowsel==-1) {
 								avisoLog.setText("<html><body>No ha selecionado ningun empleado para eliminar.</body></html>");
 							}else {
-								Main.Mis_Empleado.remove(Rowsel);
+								//Main.Mis_Empleado->Ignitor.empleados
+								Ignitor.empleados.remove(Rowsel);
 								Rowsel=-1;
 						avisoLog.setText("<html><body>Se elimino corretamente el empleado.</body></html>");
 							}
@@ -309,11 +311,18 @@ SinResModel= new DefaultTableModel();
 		SinRestable.getColumnModel().getColumn(7).setMinWidth(120);
 		SinRestable.getColumnModel().getColumn(8).setMinWidth(120);
 		SinRestable.getColumnModel().getColumn(9).setMinWidth(150);
-		for (int i = 0; i < Main.Mis_Empleado.size(); i++) {
-			if(Main.Mis_Empleado.get(i).isResponsabilidad()==true) {
+		
+		//Main.Mis_Empleado->Ignitor.empleados
+		
+		for (int i = 0; i < Ignitor.empleados.size(); i++) {
+			
+			//Main.Mis_Empleado->Ignitor.empleados
+			if(Ignitor.empleados.get(i).isResponsabilidad()==true) {
 					//llenando la tabla con resposabilidad 
 					String CRDatos []=new String [11];
-					ConResponsabilidad ConRes=(ConResponsabilidad) Main.Mis_Empleado.get(i);
+					
+					//Main.Mis_Empleado->Ignitor.empleados
+					ConResponsabilidad ConRes=(ConResponsabilidad) Ignitor.empleados.get(i);
 					CRDatos [0]=ConRes.getNombre();
 					CRDatos [1]=ConRes.getApellido();
 					CRDatos [2]=ConRes.getCedula();
@@ -324,11 +333,15 @@ SinResModel= new DefaultTableModel();
 					CRDatos [7]=String.valueOf(ConRes.getCalculoVaciones());
 					CRDatos [8]=String.valueOf(ConRes.getCalculoCesantia());
 					CRDatos [9]=String.valueOf(ConRes.getCalculoPreaviso());
-					CRDatos [10]="hola";//Main.EnUso.getCedula();
+					
+					//hola->ConRes.getRealizador();
+					CRDatos [10]=ConRes.getRealizador();//Main.EnUso.getCedula();
 					ConResModel.addRow(CRDatos);
 			}else {
 				String SRDatos []=new String [10];
-				SinResponsabilidad SinRes=(SinResponsabilidad) Main.Mis_Empleado.get(i);
+				
+				//Main.Mis_Empleado->Ignitor.empleados
+				SinResponsabilidad SinRes=(SinResponsabilidad) Ignitor.empleados.get(i);
 				SRDatos [0]=SinRes.getNombre();
 				SRDatos [1]=SinRes.getApellido();
 				SRDatos [2]=SinRes.getCedula();
@@ -338,7 +351,9 @@ SinResModel= new DefaultTableModel();
 				SRDatos [6]=String.valueOf(SinRes.getVacaciones());
 				SRDatos [7]=String.valueOf(SinRes.getCalculoVaciones());
 				SRDatos [8]=SinRes.getMotivo();
-				SRDatos [9]="hola";//Main.EnUso.getCedula();
+				
+				//hola->SinRes.getRealizador()
+				SRDatos [9]=SinRes.getRealizador();//Main.EnUso.getCedula();
 				SinResModel.addRow(SRDatos);
 			}
 			

@@ -38,7 +38,7 @@ public class JPassBorde extends JPasswordField {
 			public void focusGained(FocusEvent arg0) {
 				setFont(Focus);
 				
-				if(new String(getPassword()).equals(holder)) {
+				if(new String(getPassword()).equalsIgnoreCase(holder)) {
 					setForeground(Color.WHITE);
 					setText("");
 				}
@@ -46,7 +46,7 @@ public class JPassBorde extends JPasswordField {
 			
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				if(getText().isEmpty()) {
+				if((getText().isEmpty()) || (new String(getText()).equalsIgnoreCase(holder))) {
 					setFont(DeFocus);
 					setForeground(Color.GRAY);
 					setText(holder);
@@ -56,7 +56,24 @@ public class JPassBorde extends JPasswordField {
 	
 	}
 	
+	//Is holder
+	public boolean IsHolder() {
+		return (String.valueOf(getPassword()).equalsIgnoreCase(holder))?true:false;
+	}
 	
+	
+	//Set holder
+	public void setHolder(boolean type) {
+		if(type) {
+			setFont(DeFocus);
+			setForeground(Color.GRAY);
+			setText(holder);
+		}else {
+			setForeground(Color.WHITE);
+			setText("");
+		}
+	}
+
 	protected void paintComponent(Graphics g) {
 	   g.setColor(getBackground());
 	   g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 15, 15);

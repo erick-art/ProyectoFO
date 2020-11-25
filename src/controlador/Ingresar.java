@@ -26,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import com.toedter.calendar.JDateChooser;
 
+import Principal.Ignitor;
 import modelo.ConResponsabilidad;
 import modelo.Empleado;
 import modelo.SinResponsabilidad;
@@ -327,7 +328,11 @@ public class Ingresar extends JPanel{
 				temporal.setFechaSalida(salida.getDate()); 
 				temporal.setVacaciones(Integer.parseInt(registerField.getText()));
 				temporal.setSalarios(table.obtenerSalarios());
-
+				if(Ignitor.current!=null) {
+					temporal.setRealizador(Ignitor.current.getNOMBRE()+"@"+Ignitor.current.getCedula());
+				}else {
+					temporal.setRealizador("Usuario");
+				}
 				
 				
 				//Empleado con despido con responsabilidad
@@ -473,9 +478,8 @@ public class Ingresar extends JPanel{
 				
 				
 			}
-			
-			Main.Mis_Empleado.add(temporal);
-			System.out.println(">ALL 0K");
+		
+			Ignitor.empleados.add(temporal);
 			
 		} catch (Exception e) {
 

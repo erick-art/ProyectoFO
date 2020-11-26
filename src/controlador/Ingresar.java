@@ -57,6 +57,9 @@ public class Ingresar extends JPanel{
 	private JTextArea motivo;
 	private JDateChooser ingress;
 	private JDateChooser salida;
+	//promedio
+	double promedio_sal=0;
+	
 	
 	
 	//Tabla de meses
@@ -307,6 +310,8 @@ public class Ingresar extends JPanel{
 	
 	//
 	public void DataGetterAndSaver() {
+		
+		
 		try {
 			Empleado temporal=null;
 			//Tipo de despido
@@ -435,24 +440,206 @@ public class Ingresar extends JPanel{
 					
 					//>CALCULO DE CESANTIA
 					
+					/**
+					 * promedio salarial de los ultimos 6 meses / 30 * 30 --> para una semana
+					 */
+														//3 meses 							//6 meses
+					
+					promedio_sal=temporal.getMonto_mensual()/30;;
+					
+					if (temporal.getDias_trabajados()>=91 || temporal.getDias_trabajados() <= 182.5) {
+						
+		
+						temporal.setCesantia(promedio_sal*7);
+						
+						System.out.println(temporal.getMonto_mensual()+" mensual");
+					}
+					//de 6 meses a un ano
+					if(temporal.getDias_trabajados() >= 182.5 || temporal.getDias_trabajados() <= 365) {
+						
+						temporal.setCesantia(promedio_sal*14);
+					}
 					
 					
+					/***
+					 * despues de un ano
+					 */
+					
+					// un ano y menor a 2 anos
+					if(temporal.getDias_trabajados() > 365 || temporal.getDias_trabajados() < 730) {
+						
+						
+						temporal.setCesantia(promedio_sal*19.5);
+						
+					}	
+					// mayor o igual a 2 anos pero menor a 2 anos y 6 meses
+					if (temporal.getDias_trabajados() > 730 || temporal.getDias_trabajados() < 912.5) {
+						
+						temporal.setCesantia(promedio_sal*20);
+						temporal.setCesantia(temporal.getCesantia()*2);
+						            
+						
+						 // mayor a 2 anos  y 6 meses pero menor a 3 anos
+						 
+					}else if (temporal.getDias_trabajados() > 912.5 || temporal.getDias_trabajados() < 1095) {
+						
+						temporal.setCesantia(promedio_sal*20);
+						temporal.setCesantia(temporal.getCesantia()*3);
+						
+					}
+					//mayor 3 anos pero menor a o igual a 3 anos y 6 meses
+				if (temporal.getDias_trabajados() > 912.5 || temporal.getDias_trabajados() <= 1277.5) {
+					
+						temporal.setCesantia(promedio_sal*20.5);
+						temporal.setCesantia(temporal.getCesantia()*3);
+
+						// mayor a 3 anos  y 6 meses pero menor a 4 anos 
+					}else if(temporal.getDias_trabajados() > 1277.5 || temporal.getDias_trabajados() < 1460) {
+						
+						temporal.setCesantia(promedio_sal*20.5);
+						temporal.setCesantia(temporal.getCesantia()*4);
+					}
+				//mayor a 4 anos pero menor a 4 anos y 6 meses
+				if (temporal.getDias_trabajados() > 1277.5 || temporal.getDias_trabajados() < 1460) {
+					
+					temporal.setCesantia(promedio_sal*21);
+					temporal.setCesantia(temporal.getCesantia()*4);
+					
+					// mayor a 4 anos  y 6 meses pero menor a 5 anos 
+				}else if (temporal.getDias_trabajados() > 1460 || temporal.getDias_trabajados() < 1825) {
+					
+					temporal.setCesantia(promedio_sal*21);
+					temporal.setCesantia(temporal.getCesantia()*5);
+				}
 				
-					//((ConResponsabilidad) temporal).setCalculoCesantia(Resultado?);
+				//mayor a 5 anos pero menor o igual a 5 anos  y 6 meses
+				if (temporal.getDias_trabajados() > 1825 || temporal.getDias_trabajados() < 2007.5) {
 					
+					temporal.setCesantia(promedio_sal*21.4);
+					temporal.setCesantia(temporal.getCesantia()*5);
 					
+					//mayor a 5 anos y 6 meses pero menor a 6 anos
+				}else if (temporal.getDias_trabajados() > 2007.5 || temporal.getDias_trabajados() < 2190) {
+					
+					temporal.setCesantia(promedio_sal*21.4);
+					temporal.setCesantia(temporal.getCesantia()*6);
+					
+				}
+				//mayor a 6 anos pero menor a 6 anos y 6 meses
+				if(temporal.getDias_trabajados() > 2007.5 || temporal.getDias_trabajados() < 2372.5) {
+					
+					temporal.setCesantia(promedio_sal*21.5);
+					temporal.setCesantia(temporal.getCesantia()*6);
+					
+					//mayor a 6 anos a 6 meses pero menor a 7 anos 
+				}else if (temporal.getDias_trabajados() > 2372.5 || temporal.getDias_trabajados() < 2555) {
+					
+					temporal.setCesantia(promedio_sal*21.5);
+					temporal.setCesantia(temporal.getCesantia()*7);
+				}
+				//mayor a 7 anos pero menor a 7 anos y 6 meses
+				if (temporal.getDias_trabajados() > 2555 || temporal.getDias_trabajados() < 2737.5) {
+					
+					temporal.setCesantia(promedio_sal*22);
+					temporal.setCesantia(temporal.getCesantia()*7);
+					
+					//mayor a 7 anos y 6 meses pero menor a 8 anos
+				}else if (temporal.getDias_trabajados() > 2737.5 || temporal.getDias_trabajados() < 2920) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+				//mayor a 8 anos pero menor a 8 anos y 6 meses
+				if (temporal.getDias_trabajados() > 2920 || temporal.getDias_trabajados() < 3102.5) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+				//mayor a 8 anos y 6 meses pero menor a 9 anos	
+				}else if (temporal.getDias_trabajados() > 3102.5 || temporal.getDias_trabajados() < 3285) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+				//mayor a 9 anos pero menor a 9 anos y 6 meses
+				if (temporal.getDias_trabajados() > 3285 || temporal.getDias_trabajados() < 3467.5) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+					//mayor a 9 anos y 6 meses pero menor a 10 anos
+				}else if (temporal.getDias_trabajados() > 3467.5 || temporal.getDias_trabajados() < 3650) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+				}
+				// mayor a 10 anos pero menor a 10 anos y 6 meses
+				if (temporal.getDias_trabajados() > 3650 || temporal.getDias_trabajados() < 3832.5) {
+					
+					temporal.setCesantia(promedio_sal*21.5);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+					//mayor a 10 anos y 6 meses pero menor a 11
+				}else if (temporal.getDias_trabajados() > 3832.5 || temporal.getDias_trabajados() < 4015) {
+					
+					temporal.setCesantia(promedio_sal*21.5);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+				}
+				//mayor a 11 anos pero menor a 11 anos y 6 meses 
+				if (temporal.getDias_trabajados() > 4015 || temporal.getDias_trabajados() < 4197.5) {
+					
+					temporal.setCesantia(promedio_sal*21);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+
+					//mayor a 11 anos y 6 meses pero menor a 12 
+				}else if (temporal.getDias_trabajados() > 4197.5 || temporal.getDias_trabajados() < 4380) {
+					
+					temporal.setCesantia(promedio_sal*21);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+				//mayor a 12 anos pero menor a 12 anos y 6 meses
+				if (temporal.getDias_trabajados() > 4380 || temporal.getDias_trabajados() < 4562.51) {
+					
+					temporal.setCesantia(promedio_sal*20.5);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+					//mayor a 12 anos y 6 meses pero menor a 13 anos
+				}else if(temporal.getDias_trabajados() > 4562.51|| temporal.getDias_trabajados() < 4745.01 ) {
+					
+					temporal.setCesantia(promedio_sal*20.5);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+				 // mayor a 13 anos  pero menor a 13 anos y 6 meses
+				if (temporal.getDias_trabajados() > 4745.01 || temporal.getDias_trabajados() < 4927.51) {
+					
+					temporal.setCesantia(promedio_sal*20);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+					// mayor a 13 anos y 6 meses 
+				}else if (temporal.getDias_trabajados() > 4927.51 ) {
+					
+					temporal.setCesantia(promedio_sal*20);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+					
+		
 					//CALCULO DE VACACIONES
 					
-					for (int i = 0; i < temporal.getSalarios().length ; i++) {
+					for (int i = 6; i < temporal.getSalarios().length ; i++) {
 						
 					temporal.setSalario_total(temporal.getSalarios()[i]);
 						
 					}
 				
-					
-				temporal.setCalculoVaciones((temporal.getSalario_total() / 30 * temporal.getVacaciones()));
+					/**
+					 * promedio salaria de los ultimos 12 meses /30 * dias de vacaciones.
+					 */
+				temporal.setCalculoVaciones(( (temporal.getSalario_total()/12)/ 30 * temporal.getVacaciones()));
 					
 				}else {
+					
 				//Empleado con despido sin responsabilidad	
 					
 					((SinResponsabilidad) temporal).setMotivo(motivo.getText());
@@ -460,7 +647,7 @@ public class Ingresar extends JPanel{
 				}
 				
 				
-				//CALCULO DELEMPLEADO EN GENERAL
+				//CALCULO DEL EMPLEADO EN GENERAL
 				double salario_aux = 0.0;
 				for (int i = 0; i < temporal.getSalarios().length ; i++) {
 					
@@ -471,9 +658,10 @@ public class Ingresar extends JPanel{
 				
 				temporal.setSalario_total(salario_aux);
 				
+				//Calculo de aguinaldo
 				temporal.setCalculoAguinaldo(temporal.getSalario_total() / 12 );
-				
-				temporal.setCalculoVaciones((temporal.getSalario_total() / 30 * temporal.getVacaciones()));
+				//Calculo de vacaciones
+				temporal.setCalculoVaciones(( (temporal.getSalario_total()/12)/ 30 * temporal.getVacaciones()));
 				
 				
 				

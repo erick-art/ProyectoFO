@@ -9,6 +9,10 @@ import modelo.Usuario;
 public class Ignitor {
 
 	
+	
+	//
+	public static final String CODIGO="HLMNns10";
+	
 	//ArrayList de entidades
 	public static ArrayList<Empleado> empleados=new ArrayList<Empleado>();
 	public static ArrayList<Usuario> usuarios=new ArrayList<Usuario>();	

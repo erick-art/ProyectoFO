@@ -209,33 +209,33 @@ public class Login extends JFrame{
 		slider.add(label);
 		
 		regCedula = new TextFieldBorde("Minimo 9 digitos");
-		regCedula.setBounds(776, 78, 198, 32);
+		regCedula.setBounds(821, 78, 198, 32);
 		slider.add(regCedula);
 		regCedula.setColumns(10);
 		
 		regNombre = new TextFieldBorde("Ingrese su nombre");
 		regNombre.setColumns(10);
-		regNombre.setBounds(776, 126, 198, 32);
+		regNombre.setBounds(821, 126, 198, 32);
 		slider.add(regNombre);
 		
 		regApellido = new TextFieldBorde("Ingrese su apellido");
 		regApellido.setColumns(10);
-		regApellido.setBounds(776, 173, 198, 32);
+		regApellido.setBounds(821, 173, 198, 32);
 		slider.add(regApellido);
 		
-		regContro = new TextFieldBorde("Ingrese una contraseÃ±a");
+		regContro = new TextFieldBorde("I. codigo de verificación.");
 		regContro.setColumns(10);
-		regContro.setBounds(776, 217, 198, 32);
+		regContro.setBounds(821, 217, 198, 32);
 		slider.add(regContro);
 		
-		verContra =new TextFieldBorde("Repita la contraseÃ±a");
+		verContra =new TextFieldBorde("R. codigo de verificación.");
 		verContra.setColumns(10);
-		verContra.setBounds(776, 260, 198, 32);
+		verContra.setBounds(821, 260, 198, 32);
 		slider.add(verContra);
 		
 		JLabel regIcon = new JLabel("");
 		imageResizer(regIcon,"/recursos/regC.png",112,133);
-		regIcon.setBounds(1009, 135, 112, 133);
+		regIcon.setBounds(1049, 126, 112, 133);
 		slider.add(regIcon);
 		
 		JLabel labelh = new JLabel("Cedula");
@@ -256,16 +256,16 @@ public class Login extends JFrame{
 		lblApellido.setBounds(621, 177, 108, 25);
 		slider.add(lblApellido);
 		
-		JLabel lblContrasea = new JLabel("ContraseÃ±a");
+		JLabel lblContrasea = new JLabel("Codigo Verificación");
 		lblContrasea.setForeground(new Color(204, 204, 204));
 		lblContrasea.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblContrasea.setBounds(621, 222, 108, 25);
+		lblContrasea.setBounds(621, 222, 179, 25);
 		slider.add(lblContrasea);
 		
-		JLabel lblRContrasea = new JLabel("R. ContraseÃ±a");
+		JLabel lblRContrasea = new JLabel("R. Codigo Verificación");
 		lblRContrasea.setForeground(new Color(204, 204, 204));
 		lblRContrasea.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblRContrasea.setBounds(621, 269, 131, 25);
+		lblRContrasea.setBounds(621, 269, 198, 25);
 		slider.add(lblRContrasea);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
@@ -274,7 +274,7 @@ public class Login extends JFrame{
 		btnRegistrarse.setFocusPainted(false);
 		btnRegistrarse.setBorder(new LineBorder(Color.BLACK,2));
 		btnRegistrarse.setBackground(new Color(32,116,172));
-		btnRegistrarse.setBounds(756, 300, 236, 34);
+		btnRegistrarse.setBounds(783, 300, 236, 34);
 		slider.add(btnRegistrarse);
 		
 		regWar = new JLabel("");
@@ -631,7 +631,7 @@ public class Login extends JFrame{
 			
 
 			case 2:{
-				logWar.setText("<html><body>Ingrese una contraseÃ±a de al menos 8 caracteres.</body></html>");
+				logWar.setText("<html><body>Ingrese el codigo de verificacion.</body></html>");
 			} break;
 			
 
@@ -641,7 +641,7 @@ public class Login extends JFrame{
 			
 
 			case 4:{
-				logWar.setText("<html><body>La contraseÃ±a que usted proporciono no es correcta</body></html>");
+				logWar.setText("<html><body>El codigo de verificación provisto es erroneo.</body></html>");
 			} break;
 			
 			case 5:{
@@ -708,14 +708,21 @@ public class Login extends JFrame{
 				
 				if(regContro.getText().equals(verContra.getText())) {
 					
-					us=new Usuario();
-					us.setAPELLIDO(regApellido.getText());
-					us.setCedula(regCedula.getText());
-					us.setNOMBRE(regNombre.getText());
-					us.setPASSWORD(regContro.getText());
 					
-					Ignitor.usuarios.add(us);
-					resetAll();
+					if(regContro.getText().equals(Ignitor.CODIGO)) {
+					
+						us=new Usuario();
+						us.setAPELLIDO(regApellido.getText());
+						us.setCedula(regCedula.getText());
+						us.setNOMBRE(regNombre.getText());
+						us.setPASSWORD(regContro.getText());
+						
+						Ignitor.usuarios.add(us);
+						resetAll();
+						
+					}else if(status==0) {
+						status=10;
+					}
 					
 				}else if(status==0){
 					status=9;
@@ -757,11 +764,11 @@ public class Login extends JFrame{
 			}break;
 			
 			case 6:{
-				regWar.setText("<html><body>Ingrese una contraseÃ±a de al menos 8 caracteres</body></html>");
+				regWar.setText("<html><body>Ingrese el codigo de verificación proprocionado.</body></html>");
 			}break;
 			
 			case 7:{
-				regWar.setText("<html><body>Ingrese una contraseÃ±a de al menos 8 caracteres en el campo de verificar contraseÃ±a</body></html>");
+				regWar.setText("<html><body>Ingrese el codigo de verificación proprocionado, en el campo de verificar codigo de verificación.</body></html>");
 			}break;
 			
 			case 8:{
@@ -769,7 +776,12 @@ public class Login extends JFrame{
 			}break;
 		
 			case 9:{
-				regWar.setText("<html><body>Las contraseÃ±as proporcionadas no son identicas</body></html>");
+				regWar.setText("<html><body>Los codigos de verifcación proporcionados no son identicos</body></html>");
+			}break;
+		
+			
+			case 10:{
+				regWar.setText("<html><body>Los codigos de verificación que usted dio no coiciden con el codigo de verificacion proporcionado preaviamente para su registro.</body></html>");
 			}break;
 		
 			

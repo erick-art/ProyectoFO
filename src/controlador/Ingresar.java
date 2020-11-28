@@ -591,7 +591,7 @@ public class Ingresar extends JPanel{
 						temporal.setSalario_seis_meses(salario);
 						System.out.println(temporal.getSalario_seis_meses());
 											
-						if(temporal.getDias_trabajados() >= 91 || temporal.getDias_trabajados() <= 182.5) {
+						if(temporal.getDias_trabajados() >= 91 && temporal.getDias_trabajados() <= 182.5) {
 						
 						temporal.setMonto_mensual(temporal.getSalario_seis_meses() / 6);
 						
@@ -605,7 +605,7 @@ public class Ingresar extends JPanel{
 						
 						}
 						
-						if(temporal.getDias_trabajados() > 182.5 || temporal.getDias_trabajados() <= 365) {
+						if(temporal.getDias_trabajados() > 182.5 && temporal.getDias_trabajados() <= 365) {
 							
 							temporal.setMonto_mensual(temporal.getSalario_seis_meses()/ 6);
 							System.out.println(temporal.getMonto_mensual());
@@ -843,7 +843,7 @@ public class Ingresar extends JPanel{
 				
 					//CALCULO DE VACACIONES
 					
-					for (int i = 6; i < temporal.getSalarios().length ; i++) {
+					for (int i = 0; i < temporal.getSalarios().length ; i++) {
 						
 					temporal.setSalario_total(temporal.getSalarios()[i]);
 						
@@ -852,7 +852,7 @@ public class Ingresar extends JPanel{
 					/**
 					 * promedio salaria de los ultimos 12 meses /30 * dias de vacaciones.
 					 */
-				temporal.setCalculoVaciones(( (temporal.getSalario_total()/12)/ 30 * temporal.getVacaciones()));
+				temporal.setCalculoVaciones((( (temporal.getSalario_total()/12)/ 30) * temporal.getVacaciones()));
 					
 				}else {
 					
@@ -877,7 +877,7 @@ public class Ingresar extends JPanel{
 				//Calculo de aguinaldo
 				temporal.setCalculoAguinaldo(temporal.getSalario_total() / 12 );
 				//Calculo de vacaciones
-				temporal.setCalculoVaciones(( (temporal.getSalario_total()/12)/ 30 * temporal.getVacaciones()));
+				temporal.setCalculoVaciones(( ((temporal.getSalario_total()/12)/ 30) * temporal.getVacaciones()));
 				
 				
 				

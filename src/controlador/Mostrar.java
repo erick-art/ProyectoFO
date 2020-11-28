@@ -266,6 +266,7 @@ SinResModel= new DefaultTableModel();
 		SinResModel.addColumn("Dias de vacaciones");
 		SinResModel.addColumn("Pago de vacaciones");
 		SinResModel.addColumn("Motivo");
+		SinResModel.addColumn("Total");
 		SinResModel.addColumn("ultimo que lo modificacion");
 	
 		
@@ -281,6 +282,7 @@ SinResModel= new DefaultTableModel();
 		ConResModel.addColumn("Pago de vacaciones");
 		ConResModel.addColumn("Cesantia");
 		ConResModel.addColumn("Preaviso");
+		ConResModel.addColumn("Total");
 		ConResModel.addColumn("ultimo que lo modificacion");
 		
 		ConRestable.setModel(ConResModel);
@@ -296,7 +298,8 @@ SinResModel= new DefaultTableModel();
 		ConRestable.getColumnModel().getColumn(7).setMinWidth(120);
 		ConRestable.getColumnModel().getColumn(8).setMinWidth(120);
 		ConRestable.getColumnModel().getColumn(9).setMinWidth(120);
-		ConRestable.getColumnModel().getColumn(10).setMinWidth(150);
+		ConRestable.getColumnModel().getColumn(10).setMinWidth(120);
+		ConRestable.getColumnModel().getColumn(11).setMinWidth(150);
 		
 		SinRestable.setModel(SinResModel);
 		SinRestable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -310,16 +313,17 @@ SinResModel= new DefaultTableModel();
 		SinRestable.getColumnModel().getColumn(6).setMinWidth(120);
 		SinRestable.getColumnModel().getColumn(7).setMinWidth(120);
 		SinRestable.getColumnModel().getColumn(8).setMinWidth(120);
-		SinRestable.getColumnModel().getColumn(9).setMinWidth(150);
+		SinRestable.getColumnModel().getColumn(9).setMinWidth(120);
+		SinRestable.getColumnModel().getColumn(10).setMinWidth(150);
 		
 		//Main.Mis_Empleado->Ignitor.empleados
 		
 		for (int i = 0; i < Ignitor.empleados.size(); i++) {
-			
+			Double Total=(double) 0;
 			//Main.Mis_Empleado->Ignitor.empleados
 			if(Ignitor.empleados.get(i).isResponsabilidad()==true) {
 					//llenando la tabla con resposabilidad 
-					String CRDatos []=new String [11];
+					String CRDatos []=new String [12];
 					
 					//Main.Mis_Empleado->Ignitor.empleados
 					ConResponsabilidad ConRes=(ConResponsabilidad) Ignitor.empleados.get(i);
@@ -333,12 +337,18 @@ SinResModel= new DefaultTableModel();
 					CRDatos [7]=String.valueOf(ConRes.getCalculoVaciones());
 					CRDatos [8]=String.valueOf(ConRes.getCalculoCesantia());
 					CRDatos [9]=String.valueOf(ConRes.getCalculoPreaviso());
-					
+					Total=ConRes.getCalculoPreaviso();
+					Total+=ConRes.getCalculoCesantia();
+					Total+=ConRes.getCalculoAguinaldo();
+					Total+=ConRes.getCalculoVaciones();
+					System.out.println(Total);
+
+					CRDatos [10]=String.valueOf(Total);
 					//hola->ConRes.getRealizador();
-					CRDatos [10]=ConRes.getRealizador();//Main.EnUso.getCedula();
+					CRDatos [11]=ConRes.getRealizador();//Main.EnUso.getCedula();
 					ConResModel.addRow(CRDatos);
 			}else {
-				String SRDatos []=new String [10];
+				String SRDatos []=new String [11];
 				
 				//Main.Mis_Empleado->Ignitor.empleados
 				SinResponsabilidad SinRes=(SinResponsabilidad) Ignitor.empleados.get(i);
@@ -351,9 +361,12 @@ SinResModel= new DefaultTableModel();
 				SRDatos [6]=String.valueOf(SinRes.getVacaciones());
 				SRDatos [7]=String.valueOf(SinRes.getCalculoVaciones());
 				SRDatos [8]=SinRes.getMotivo();
-				
+				Total=SinRes.getCalculoVaciones();
+				Total+=SinRes.getCalculoAguinaldo();
+				System.out.println(Total);
+				SRDatos [9]=String.valueOf(Total);
 				//hola->SinRes.getRealizador()
-				SRDatos [9]=SinRes.getRealizador();//Main.EnUso.getCedula();
+				SRDatos [10]=SinRes.getRealizador();//Main.EnUso.getCedula();
 				SinResModel.addRow(SRDatos);
 			}
 			

@@ -356,10 +356,220 @@ public class Ingresar extends JPanel{
 					if(((ConResponsabilidad) temporal).isPreaviso()) {
 						
 					((ConResponsabilidad) temporal).setCalculoPreaviso(0);
+					
+					
+					//------------- AQUI LO PEGUE
+					
+					System.out.println("Entre con Pre aviso");
+					
+					temporal.setDias_trabajados(antiguedad_laboral(temporal.getFechaIngreso(), temporal.getFechaSalida()));
+					
+					double preaviso_aux = 0;
+					double salario = 0.0;
+					int condicion = 0;
+					
+					for (int i = (temporal.getSalarios().length-1); i>=0; i--) {
+						
+						if (condicion!= 6 ){
+							
+						salario+= temporal.getSalarios()[i];	
+							
+						condicion ++;
+						}
+	
+					}
+					
+					
+					temporal.setMonto_mensual(salario / 6);
+					promedio_sal=temporal.getMonto_mensual()/30;
+					
+					System.out.println(promedio_sal+" promedio sal");
+					System.out.println(temporal.getDias_trabajados() + "Dias traba" );
+					if (temporal.getDias_trabajados()>=91 && temporal.getDias_trabajados() <= 182.5) {
+						
+		
+						temporal.setCesantia(promedio_sal*7);
+						
+						System.out.println(temporal.getMonto_mensual()+" mensual");
+					}
+					//de 6 meses a un ano
+					if(temporal.getDias_trabajados() >= 182.5 && temporal.getDias_trabajados() <= 365) {
+						
+						temporal.setCesantia(promedio_sal*14);
+					}
+					
+					
+					/***
+					 * despues de un ano
+					 */
+					
+					// un ano y menor a 2 anos
+					if(temporal.getDias_trabajados() >= 365 && temporal.getDias_trabajados() < 730) {
+						
+						
+						temporal.setCesantia(promedio_sal*19.5);
+						
+					}	
+					// mayor o igual a 2 anos pero menor a 2 anos y 6 meses
+					if (temporal.getDias_trabajados() >= 730 && temporal.getDias_trabajados() < 912.5) {
+						System.out.println("entre a 2 años");
+						temporal.setCesantia(promedio_sal*20);
+						temporal.setCesantia(temporal.getCesantia()*2);
+						System.out.println(temporal.getCesantia()+"ya me multipleque por 20 y 2");
+						            
+						
+						 // mayor a 2 anos  y 6 meses pero menor a 3 anos
+						 
+					}else if (temporal.getDias_trabajados() >= 912.5 && temporal.getDias_trabajados() < 1095) {
+						
+						System.out.println("entre a 2 años y 6 meses");
+						temporal.setCesantia(promedio_sal*20);
+						temporal.setCesantia(temporal.getCesantia()*3);
+						System.out.println(temporal.getCesantia()+"ya me multipleque por 20 y 3");
+						
+					}
+					//mayor 3 anos pero menor a o igual a 3 anos y 6 meses
+				if (temporal.getDias_trabajados() >= 1095 && temporal.getDias_trabajados() < 1277.5) {
+					
+						temporal.setCesantia(promedio_sal*20.5);
+						temporal.setCesantia(temporal.getCesantia()*3);
+
+						// mayor a 3 anos  y 6 meses pero menor a 4 anos 
+					}else if(temporal.getDias_trabajados() >= 1277.5 && temporal.getDias_trabajados() < 1460) {
+						
+						temporal.setCesantia(promedio_sal*20.5);
+						temporal.setCesantia(temporal.getCesantia()*4);
+					}
+				//mayor a 4 anos pero menor a 4 anos y 6 meses
+				if (temporal.getDias_trabajados() > 1460 && temporal.getDias_trabajados() <= 1642.5) {
+					
+					temporal.setCesantia(promedio_sal*21);
+					temporal.setCesantia(temporal.getCesantia()*4);
+					
+					// mayor a 4 anos  y 6 meses pero menor a 5 anos 
+				}else if (temporal.getDias_trabajados() > 1642.5 && temporal.getDias_trabajados() <= 1825) {
+					
+					temporal.setCesantia(promedio_sal*21);
+					temporal.setCesantia(temporal.getCesantia()*5);
+				}
+				
+				//mayor a 5 anos pero menor o igual a 5 anos  y 6 meses
+				if (temporal.getDias_trabajados() > 1825 && temporal.getDias_trabajados() <= 2007.5) {
+					
+					temporal.setCesantia(promedio_sal*21.4);
+					temporal.setCesantia(temporal.getCesantia()*5);
+					
+					//mayor a 5 anos y 6 meses pero menor a 6 anos
+				}else if (temporal.getDias_trabajados() > 2007.5 && temporal.getDias_trabajados() <= 2190) {
+					
+					temporal.setCesantia(promedio_sal*21.4);
+					temporal.setCesantia(temporal.getCesantia()*6);
+					
+				}
+				//mayor a 6 anos pero menor a 6 anos y 6 meses
+				if(temporal.getDias_trabajados() > 2007.5 && temporal.getDias_trabajados() <= 2372.5) {
+					
+					temporal.setCesantia(promedio_sal*21.5);
+					temporal.setCesantia(temporal.getCesantia()*6);
+					
+					//mayor a 6 anos a 6 meses pero menor a 7 anos 
+				}else if (temporal.getDias_trabajados() > 2372.5 && temporal.getDias_trabajados() <= 2555) {
+					
+					temporal.setCesantia(promedio_sal*21.5);
+					temporal.setCesantia(temporal.getCesantia()*7);
+				}
+				//mayor a 7 anos pero menor a 7 anos y 6 meses
+				if (temporal.getDias_trabajados() > 2555 && temporal.getDias_trabajados() <= 2737.5) {
+					
+					temporal.setCesantia(promedio_sal*22);
+					temporal.setCesantia(temporal.getCesantia()*7);
+					
+					//mayor a 7 anos y 6 meses pero menor a 8 anos
+				}else if (temporal.getDias_trabajados() > 2737.5 && temporal.getDias_trabajados() <= 2920) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+				//mayor a 8 anos pero menor a 8 anos y 6 meses
+				if (temporal.getDias_trabajados() > 2920 && temporal.getDias_trabajados() <= 3102.5) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+				//mayor a 8 anos y 6 meses pero menor a 9 anos	
+				}else if (temporal.getDias_trabajados() > 3102.5 && temporal.getDias_trabajados() <= 3285) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+				//mayor a 9 anos pero menor a 9 anos y 6 meses
+				if (temporal.getDias_trabajados() > 3285 && temporal.getDias_trabajados() <= 3467.5) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+					//mayor a 9 anos y 6 meses pero menor a 10 anos
+				}else if (temporal.getDias_trabajados() > 3467.5 && temporal.getDias_trabajados() <= 3650) {
+					
+					temporal.setCesantia(promedio_sal*22);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+				}
+				// mayor a 10 anos pero menor a 10 anos y 6 meses
+				if (temporal.getDias_trabajados() > 3650 && temporal.getDias_trabajados() <= 3832.5) {
+					
+					temporal.setCesantia(promedio_sal*21.5);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+					//mayor a 10 anos y 6 meses pero menor a 11
+				}else if (temporal.getDias_trabajados() > 3832.5 && temporal.getDias_trabajados() <= 4015) {
+					
+					temporal.setCesantia(promedio_sal*21.5);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+				}
+				//mayor a 11 anos pero menor a 11 anos y 6 meses 
+				if (temporal.getDias_trabajados() > 4015 && temporal.getDias_trabajados() <= 4197.5) {
+					
+					temporal.setCesantia(promedio_sal*21);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+
+					//mayor a 11 anos y 6 meses pero menor a 12 
+				}else if (temporal.getDias_trabajados() > 4197.5 && temporal.getDias_trabajados() <= 4380) {
+					
+					temporal.setCesantia(promedio_sal*21);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+				//mayor a 12 anos pero menor a 12 anos y 6 meses
+				if (temporal.getDias_trabajados() > 4380 && temporal.getDias_trabajados() <= 4562.51) {
+					
+					temporal.setCesantia(promedio_sal*20.5);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+					//mayor a 12 anos y 6 meses pero menor a 13 anos
+				}else if(temporal.getDias_trabajados() > 4562.51 && temporal.getDias_trabajados() <= 4745.01 ) {
+					
+					temporal.setCesantia(promedio_sal*20.5);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+				 // mayor a 13 anos  pero menor a 13 anos y 6 meses
+				if (temporal.getDias_trabajados() > 4745.01 && temporal.getDias_trabajados() <= 4927.51) {
+					
+					temporal.setCesantia(promedio_sal*20);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+					
+					// mayor a 13 anos y 6 meses 
+				}else if (temporal.getDias_trabajados() > 4927.51 ) {
+					
+					temporal.setCesantia(promedio_sal*20);   
+					temporal.setCesantia(temporal.getCesantia()*8);
+				}
+					
+				((ConResponsabilidad) temporal).setCalculoCesantia(temporal.getCesantia());
 						
 						
 					}else {
-						System.out.println();
+						System.out.println("Entre sin preaviso");
 						temporal.setDias_trabajados(antiguedad_laboral(temporal.getFechaIngreso(), temporal.getFechaSalida()));
 						System.out.println(antiguedad_laboral(temporal.getFechaIngreso(), temporal.getFechaSalida()));
 
@@ -430,203 +640,205 @@ public class Ingresar extends JPanel{
 						
 						//>CALCULO DE PREAVISO
 						
+						/**
+						 * promedio salarial de los ultimos 6 meses / 30 * 30 --> para una semana
+						 */
+															//3 meses 							//6 meses
+						
+						promedio_sal=temporal.getMonto_mensual()/30;
+						
+						System.out.println(promedio_sal+" MESSI");
+						System.out.println(temporal.getDias_trabajados() + "Dias traba MESSI" );
+						if (temporal.getDias_trabajados()>=91 && temporal.getDias_trabajados() <= 182.5) {
+							
+			
+							temporal.setCesantia(promedio_sal*7);
+							
+							System.out.println(temporal.getMonto_mensual()+" mensual");
+						}
+						//de 6 meses a un ano
+						if(temporal.getDias_trabajados() >= 182.5 && temporal.getDias_trabajados() <= 365) {
+							
+							temporal.setCesantia(promedio_sal*14);
+						}
+						
+						
+						/***
+						 * despues de un ano
+						 */
+						
+						// un ano y menor a 2 anos
+						if(temporal.getDias_trabajados() > 365 && temporal.getDias_trabajados() <= 730) {
+							
+							
+							temporal.setCesantia(promedio_sal*19.5);
+							
+						}	
+						// mayor o igual a 2 anos pero menor a 2 anos y 6 meses
+						if (temporal.getDias_trabajados() > 730 && temporal.getDias_trabajados() <= 912.5) {
+							System.out.println("entre a 2 años");
+							temporal.setCesantia(promedio_sal*20);
+							temporal.setCesantia(temporal.getCesantia()*2);
+							System.out.println(temporal.getCesantia()+"ya me multipleque por 20 y 2");
+							            
+							
+							 // mayor a 2 anos  y 6 meses pero menor a 3 anos
+							 
+						}else if (temporal.getDias_trabajados() > 912.5 && temporal.getDias_trabajados() <= 1095) {
+							
+							System.out.println("entre a 2 años y 6 meses");
+							temporal.setCesantia(promedio_sal*20);
+							temporal.setCesantia(temporal.getCesantia()*3);
+							System.out.println(temporal.getCesantia()+"ya me multipleque por 20 y 3");
+							
+						}
+						//mayor 3 anos pero menor a o igual a 3 anos y 6 meses
+					if (temporal.getDias_trabajados() > 1095 && temporal.getDias_trabajados() <= 1277.5) {
+						
+							temporal.setCesantia(promedio_sal*20.5);
+							temporal.setCesantia(temporal.getCesantia()*3);
+
+							// mayor a 3 anos  y 6 meses pero menor a 4 anos 
+						}else if(temporal.getDias_trabajados() > 1277.5 && temporal.getDias_trabajados() <= 1460) {
+							
+							temporal.setCesantia(promedio_sal*20.5);
+							temporal.setCesantia(temporal.getCesantia()*4);
+						}
+					//mayor a 4 anos pero menor a 4 anos y 6 meses
+					if (temporal.getDias_trabajados() > 1460 && temporal.getDias_trabajados() <= 1642.5) {
+						
+						temporal.setCesantia(promedio_sal*21);
+						temporal.setCesantia(temporal.getCesantia()*4);
+						
+						// mayor a 4 anos  y 6 meses pero menor a 5 anos 
+					}else if (temporal.getDias_trabajados() > 1642.5 && temporal.getDias_trabajados() <= 1825) {
+						
+						temporal.setCesantia(promedio_sal*21);
+						temporal.setCesantia(temporal.getCesantia()*5);
+					}
+					
+					//mayor a 5 anos pero menor o igual a 5 anos  y 6 meses
+					if (temporal.getDias_trabajados() > 1825 && temporal.getDias_trabajados() <= 2007.5) {
+						
+						temporal.setCesantia(promedio_sal*21.4);
+						temporal.setCesantia(temporal.getCesantia()*5);
+						
+						//mayor a 5 anos y 6 meses pero menor a 6 anos
+					}else if (temporal.getDias_trabajados() > 2007.5 && temporal.getDias_trabajados() <= 2190) {
+						
+						temporal.setCesantia(promedio_sal*21.4);
+						temporal.setCesantia(temporal.getCesantia()*6);
+						
+					}
+					//mayor a 6 anos pero menor a 6 anos y 6 meses
+					if(temporal.getDias_trabajados() > 2007.5 && temporal.getDias_trabajados() <= 2372.5) {
+						
+						temporal.setCesantia(promedio_sal*21.5);
+						temporal.setCesantia(temporal.getCesantia()*6);
+						
+						//mayor a 6 anos a 6 meses pero menor a 7 anos 
+					}else if (temporal.getDias_trabajados() > 2372.5 && temporal.getDias_trabajados() <= 2555) {
+						
+						temporal.setCesantia(promedio_sal*21.5);
+						temporal.setCesantia(temporal.getCesantia()*7);
+					}
+					//mayor a 7 anos pero menor a 7 anos y 6 meses
+					if (temporal.getDias_trabajados() > 2555 && temporal.getDias_trabajados() <= 2737.5) {
+						
+						temporal.setCesantia(promedio_sal*22);
+						temporal.setCesantia(temporal.getCesantia()*7);
+						
+						//mayor a 7 anos y 6 meses pero menor a 8 anos
+					}else if (temporal.getDias_trabajados() > 2737.5 && temporal.getDias_trabajados() <= 2920) {
+						
+						temporal.setCesantia(promedio_sal*22);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+					}
+					//mayor a 8 anos pero menor a 8 anos y 6 meses
+					if (temporal.getDias_trabajados() > 2920 && temporal.getDias_trabajados() <= 3102.5) {
+						
+						temporal.setCesantia(promedio_sal*22);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+						
+					//mayor a 8 anos y 6 meses pero menor a 9 anos	
+					}else if (temporal.getDias_trabajados() > 3102.5 && temporal.getDias_trabajados() <= 3285) {
+						
+						temporal.setCesantia(promedio_sal*22);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+					}
+					//mayor a 9 anos pero menor a 9 anos y 6 meses
+					if (temporal.getDias_trabajados() > 3285 && temporal.getDias_trabajados() <= 3467.5) {
+						
+						temporal.setCesantia(promedio_sal*22);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+						
+						//mayor a 9 anos y 6 meses pero menor a 10 anos
+					}else if (temporal.getDias_trabajados() > 3467.5 && temporal.getDias_trabajados() <= 3650) {
+						
+						temporal.setCesantia(promedio_sal*22);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+						
+					}
+					// mayor a 10 anos pero menor a 10 anos y 6 meses
+					if (temporal.getDias_trabajados() > 3650 && temporal.getDias_trabajados() <= 3832.5) {
+						
+						temporal.setCesantia(promedio_sal*21.5);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+						
+						//mayor a 10 anos y 6 meses pero menor a 11
+					}else if (temporal.getDias_trabajados() > 3832.5 && temporal.getDias_trabajados() <= 4015) {
+						
+						temporal.setCesantia(promedio_sal*21.5);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+						
+					}
+					//mayor a 11 anos pero menor a 11 anos y 6 meses 
+					if (temporal.getDias_trabajados() > 4015 && temporal.getDias_trabajados() <= 4197.5) {
+						
+						temporal.setCesantia(promedio_sal*21);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+
+						//mayor a 11 anos y 6 meses pero menor a 12 
+					}else if (temporal.getDias_trabajados() > 4197.5 && temporal.getDias_trabajados() <= 4380) {
+						
+						temporal.setCesantia(promedio_sal*21);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+					}
+					//mayor a 12 anos pero menor a 12 anos y 6 meses
+					if (temporal.getDias_trabajados() > 4380 && temporal.getDias_trabajados() <= 4562.51) {
+						
+						temporal.setCesantia(promedio_sal*20.5);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+						
+						//mayor a 12 anos y 6 meses pero menor a 13 anos
+					}else if(temporal.getDias_trabajados() > 4562.51 && temporal.getDias_trabajados() <= 4745.01 ) {
+						
+						temporal.setCesantia(promedio_sal*20.5);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+					}
+					 // mayor a 13 anos  pero menor a 13 anos y 6 meses
+					if (temporal.getDias_trabajados() > 4745.01 && temporal.getDias_trabajados() <= 4927.51) {
+						
+						temporal.setCesantia(promedio_sal*20);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+						
+						// mayor a 13 anos y 6 meses 
+					}else if (temporal.getDias_trabajados() > 4927.51 ) {
+						
+						temporal.setCesantia(promedio_sal*20);   
+						temporal.setCesantia(temporal.getCesantia()*8);
+					}
+						
+					((ConResponsabilidad) temporal).setCalculoCesantia(temporal.getCesantia());
+						
 						
 						
 						//((ConResponsabilidad) temporal).setCalculoPreaviso(Resultado?);
-					}
+					}//Fin else sin preaviso
 					
 					//>CALCULO DE CESANTIA
 					
-					/**
-					 * promedio salarial de los ultimos 6 meses / 30 * 30 --> para una semana
-					 */
-														//3 meses 							//6 meses
 					
-					promedio_sal=temporal.getMonto_mensual()/30;
-					
-					System.out.println(promedio_sal+" promedio sal");
-					System.out.println(temporal.getDias_trabajados() + "Dias traba" );
-					if (temporal.getDias_trabajados()>=91 && temporal.getDias_trabajados() <= 182.5) {
-						
-		
-						temporal.setCesantia(promedio_sal*7);
-						
-						System.out.println(temporal.getMonto_mensual()+" mensual");
-					}
-					//de 6 meses a un ano
-					if(temporal.getDias_trabajados() >= 182.5 && temporal.getDias_trabajados() <= 365) {
-						
-						temporal.setCesantia(promedio_sal*14);
-					}
-					
-					
-					/***
-					 * despues de un ano
-					 */
-					
-					// un ano y menor a 2 anos
-					if(temporal.getDias_trabajados() > 365 && temporal.getDias_trabajados() < 730) {
-						
-						
-						temporal.setCesantia(promedio_sal*19.5);
-						
-					}	
-					// mayor o igual a 2 anos pero menor a 2 anos y 6 meses
-					if (temporal.getDias_trabajados() > 730 && temporal.getDias_trabajados() < 912.5) {
-						System.out.println("entre a 2 años");
-						temporal.setCesantia(promedio_sal*20);
-						temporal.setCesantia(temporal.getCesantia()*2);
-						System.out.println(temporal.getCesantia()+"ya me multipleque por 20 y 2");
-						            
-						
-						 // mayor a 2 anos  y 6 meses pero menor a 3 anos
-						 
-					}else if (temporal.getDias_trabajados() >= 912.5 && temporal.getDias_trabajados() < 1095) {
-						
-						System.out.println("entre a 2 años y 6 meses");
-						temporal.setCesantia(promedio_sal*20);
-						temporal.setCesantia(temporal.getCesantia()*3);
-						System.out.println(temporal.getCesantia()+"ya me multipleque por 20 y 3");
-						
-					}
-					//mayor 3 anos pero menor a o igual a 3 anos y 6 meses
-				if (temporal.getDias_trabajados() >= 1095 && temporal.getDias_trabajados() <= 1277.5) {
-					
-						temporal.setCesantia(promedio_sal*20.5);
-						temporal.setCesantia(temporal.getCesantia()*3);
-
-						// mayor a 3 anos  y 6 meses pero menor a 4 anos 
-					}else if(temporal.getDias_trabajados() > 1277.5 && temporal.getDias_trabajados() < 1460) {
-						
-						temporal.setCesantia(promedio_sal*20.5);
-						temporal.setCesantia(temporal.getCesantia()*4);
-					}
-				//mayor a 4 anos pero menor a 4 anos y 6 meses
-				if (temporal.getDias_trabajados() > 1277.5 && temporal.getDias_trabajados() < 1460) {
-					
-					temporal.setCesantia(promedio_sal*21);
-					temporal.setCesantia(temporal.getCesantia()*4);
-					
-					// mayor a 4 anos  y 6 meses pero menor a 5 anos 
-				}else if (temporal.getDias_trabajados() > 1460 && temporal.getDias_trabajados() < 1825) {
-					
-					temporal.setCesantia(promedio_sal*21);
-					temporal.setCesantia(temporal.getCesantia()*5);
-				}
-				
-				//mayor a 5 anos pero menor o igual a 5 anos  y 6 meses
-				if (temporal.getDias_trabajados() > 1825 && temporal.getDias_trabajados() < 2007.5) {
-					
-					temporal.setCesantia(promedio_sal*21.4);
-					temporal.setCesantia(temporal.getCesantia()*5);
-					
-					//mayor a 5 anos y 6 meses pero menor a 6 anos
-				}else if (temporal.getDias_trabajados() > 2007.5 && temporal.getDias_trabajados() < 2190) {
-					
-					temporal.setCesantia(promedio_sal*21.4);
-					temporal.setCesantia(temporal.getCesantia()*6);
-					
-				}
-				//mayor a 6 anos pero menor a 6 anos y 6 meses
-				if(temporal.getDias_trabajados() > 2007.5 && temporal.getDias_trabajados() < 2372.5) {
-					
-					temporal.setCesantia(promedio_sal*21.5);
-					temporal.setCesantia(temporal.getCesantia()*6);
-					
-					//mayor a 6 anos a 6 meses pero menor a 7 anos 
-				}else if (temporal.getDias_trabajados() > 2372.5 && temporal.getDias_trabajados() < 2555) {
-					
-					temporal.setCesantia(promedio_sal*21.5);
-					temporal.setCesantia(temporal.getCesantia()*7);
-				}
-				//mayor a 7 anos pero menor a 7 anos y 6 meses
-				if (temporal.getDias_trabajados() > 2555 && temporal.getDias_trabajados() < 2737.5) {
-					
-					temporal.setCesantia(promedio_sal*22);
-					temporal.setCesantia(temporal.getCesantia()*7);
-					
-					//mayor a 7 anos y 6 meses pero menor a 8 anos
-				}else if (temporal.getDias_trabajados() > 2737.5 && temporal.getDias_trabajados() < 2920) {
-					
-					temporal.setCesantia(promedio_sal*22);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-				}
-				//mayor a 8 anos pero menor a 8 anos y 6 meses
-				if (temporal.getDias_trabajados() > 2920 && temporal.getDias_trabajados() < 3102.5) {
-					
-					temporal.setCesantia(promedio_sal*22);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-					
-				//mayor a 8 anos y 6 meses pero menor a 9 anos	
-				}else if (temporal.getDias_trabajados() > 3102.5 && temporal.getDias_trabajados() < 3285) {
-					
-					temporal.setCesantia(promedio_sal*22);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-				}
-				//mayor a 9 anos pero menor a 9 anos y 6 meses
-				if (temporal.getDias_trabajados() > 3285 && temporal.getDias_trabajados() < 3467.5) {
-					
-					temporal.setCesantia(promedio_sal*22);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-					
-					//mayor a 9 anos y 6 meses pero menor a 10 anos
-				}else if (temporal.getDias_trabajados() > 3467.5 && temporal.getDias_trabajados() < 3650) {
-					
-					temporal.setCesantia(promedio_sal*22);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-					
-				}
-				// mayor a 10 anos pero menor a 10 anos y 6 meses
-				if (temporal.getDias_trabajados() > 3650 && temporal.getDias_trabajados() < 3832.5) {
-					
-					temporal.setCesantia(promedio_sal*21.5);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-					
-					//mayor a 10 anos y 6 meses pero menor a 11
-				}else if (temporal.getDias_trabajados() > 3832.5 && temporal.getDias_trabajados() < 4015) {
-					
-					temporal.setCesantia(promedio_sal*21.5);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-					
-				}
-				//mayor a 11 anos pero menor a 11 anos y 6 meses 
-				if (temporal.getDias_trabajados() > 4015 && temporal.getDias_trabajados() < 4197.5) {
-					
-					temporal.setCesantia(promedio_sal*21);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-
-					//mayor a 11 anos y 6 meses pero menor a 12 
-				}else if (temporal.getDias_trabajados() > 4197.5 && temporal.getDias_trabajados() < 4380) {
-					
-					temporal.setCesantia(promedio_sal*21);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-				}
-				//mayor a 12 anos pero menor a 12 anos y 6 meses
-				if (temporal.getDias_trabajados() > 4380 && temporal.getDias_trabajados() < 4562.51) {
-					
-					temporal.setCesantia(promedio_sal*20.5);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-					
-					//mayor a 12 anos y 6 meses pero menor a 13 anos
-				}else if(temporal.getDias_trabajados() > 4562.51 && temporal.getDias_trabajados() < 4745.01 ) {
-					
-					temporal.setCesantia(promedio_sal*20.5);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-				}
-				 // mayor a 13 anos  pero menor a 13 anos y 6 meses
-				if (temporal.getDias_trabajados() > 4745.01 && temporal.getDias_trabajados() < 4927.51) {
-					
-					temporal.setCesantia(promedio_sal*20);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-					
-					// mayor a 13 anos y 6 meses 
-				}else if (temporal.getDias_trabajados() > 4927.51 ) {
-					
-					temporal.setCesantia(promedio_sal*20);   
-					temporal.setCesantia(temporal.getCesantia()*8);
-				}
-					
-				((ConResponsabilidad) temporal).setCalculoCesantia(temporal.getCesantia());
 				
 				
 					//CALCULO DE VACACIONES

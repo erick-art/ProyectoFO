@@ -339,6 +339,7 @@ SinResModel= new DefaultTableModel();
 					CRDatos [9]=String.valueOf(ConRes.getCalculoPreaviso());
 					Total=ConRes.getCalculoPreaviso();
 					Total+=ConRes.getCalculoCesantia();
+					System.out.println(ConRes.getCalculoCesantia());
 					Total+=ConRes.getCalculoAguinaldo();
 					Total+=ConRes.getCalculoVaciones();
 					System.out.println(Total);

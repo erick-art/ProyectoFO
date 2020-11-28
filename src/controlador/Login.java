@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
+
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -94,12 +96,23 @@ public class Login extends JFrame{
 		this.setUndecorated(true);
 		this.setSize(X,IY);
 		this.setContentPane(mainPanel);
-		this.setTitle("Aplicacion - Iniciar Sesion");	
+		this.setTitle("Calculadora Liquidación - Iniciar Sesion");	
 		this.setResizable(false);
 		this.setBackground(logBack);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setOpacity(1.0f);
+		
+		
+		//Añadiendo el icono
+		//Control de excepciones
+		try {
+			Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/recursos/showIco.png"));
+			this.setIconImage(iconoPropio);
+		}catch(Exception e) {
+				//Exepcion vacia
+		}
+				
 		
 
 		//GUI Components

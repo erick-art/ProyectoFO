@@ -81,7 +81,7 @@ public class Main extends JFrame{
 		
 		///Chara
 		this.setSize(X,Y);
-		this.setTitle("Aplicacion - Menu Principal");
+		this.setTitle("Calculadora Liquidación - Menu Principal");
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setUndecorated(true);
